@@ -1,7 +1,8 @@
-name: Build mdBook
+name: Build and deploy mdBook
 
 on:
   push:
+    branches: [ main ]
     paths:
       - './**'
       - '.github/workflows/**'
@@ -10,20 +11,14 @@ on:
       - './**'
 
 jobs:
-  build:
-  - name: Deploy to GitHub Pages
-  uses: peaceiris/actions-gh-pages@v3
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    publish_dir: ./book
-    publish_branch: gh-pages
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -31,10 +26,19 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Cache cargo registry and git index
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-
+
       - name: Install mdbook
         run: |
           cargo install mdbook --locked --force
-          # ensure cargo bin dir is on PATH for subsequent steps
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Debug - show repo files and find SUMMARY.md
@@ -48,6 +52,16 @@ jobs:
           find . -maxdepth 6 -type f -iname 'SUMMARY.md' -print || true
 
       - name: Build book with mdbook
-        working-directory: ./
         run: |
+          # 默认输出目录是 ./book，可用 --dest-dir <dir> 指定其它目录
           mdbook build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
+          publish_branch: gh-pages
+          # 以下两个字段用于提交记录的作者信息
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
