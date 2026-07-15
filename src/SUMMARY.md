@@ -3,7 +3,7 @@
 [Helix](./title-page.md)
 
 - [安装](./install.md)
-  - [包管理器](./package-managers.md)
+  - [从包管理器](./package-managers.md)
   - [从源代码构建](./building-from-source.md)
 - [使用](./usage.md)
   - [寄存器](./registers.md)

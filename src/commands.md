@@ -1,16 +1,16 @@
-# Commands
+# 命令
 
 - [Typable commands](#typable-commands)
 - [Static commands](#static-commands)
 
-## Typable commands
+## 可输入命令
 
-Typable commands are used from command mode and may take arguments. Command mode can be activated by pressing `:`. The built-in typable commands are:
+可输入命令用于命令模式，可以接受参数。命令模式可通过按 `:` 进入。内置的可输入命令有：
 
 {{#include ./generated/typable-cmd.md}}
 
-## Static Commands
+## 静态命令
 
-Static commands take no arguments and can be bound to keys. Static commands can also be executed from the command picker (`<space>?`). The built-in static commands are:
+静态命令不接受参数，可以绑定到按键上。静态命令也可以通过命令选取器（`<space>?`）执行。内置的静态命令有：
 
 {{#include ./generated/static-cmd.md}}

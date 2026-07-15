@@ -1,13 +1,13 @@
 # Configuration
 
-To override global configuration parameters, create a `config.toml` file located in your config directory:
+要覆盖全局配置参数，请在配置目录中创建一个 `config.toml` 文件：
 
-- Linux and Mac: `~/.config/helix/config.toml`
+- Linux / Mac: `~/.config/helix/config.toml`
 - Windows: `%AppData%\helix\config.toml`
 
-> 💡 You can easily open the config file by typing `:config-open` within Helix normal mode.
+> 💡 你可以通过在 Helix 正常模式下输入命令 `:config-open` 来打开配置文件。
 
-Example config:
+示例配置：
 
 ```toml
 theme = "onedark"
@@ -25,11 +25,9 @@ select = "underline"
 hidden = false
 ```
 
-You can use a custom configuration file by specifying it with the `-c` or
-`--config` command line argument, for example `hx -c path/to/custom-config.toml`.
-You can reload the config file by issuing the `:config-reload` command. Alternatively, on Unix operating systems, you can reload it by sending the USR1
-signal to the Helix process, such as by using the command `pkill -USR1 hx`.
+你可以使用 `-c` 或 `--config` 命令行参数指定自定义配置文件，例如 `hx -c path/to/custom-config.toml`。
+你可以通过执行 `:config-reload` 命令重新加载配置文件。或者，在 Unix 操作系统上，你也可以通过向 Helix 进程发送 USR1 信号来重新加载它，例如使用命令 `pkill -USR1 hx`。
 
-Finally, you can have a `config.toml` and a `languages.toml` local to a project by putting it under a `.helix` directory in your repository.
-Its settings will be merged with the configuration directory and the built-in configuration.
+最后，你可以在仓库根目录下的 `.helix` 目录中放置项目本地的 `config.toml` 和 `languages.toml` 文件。
+它的设置将与配置目录和内置配置合并。
 

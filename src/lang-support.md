@@ -1,13 +1,10 @@
 ## Language Support
 
-The following languages and Language Servers are supported. To use
-Language Server features, you must first [configure][lsp-config-wiki] the
-appropriate Language Server.
+支持以下语言和语言服务器。要使用语言服务器功能，你必须先[配置][lsp-config-wiki]相应的语言服务器。
 
-You can check the language support in your installed helix version with `hx --health`.
+你可以使用 `hx --health` 检查已安装的 Helix 版本中的语言支持情况。
 
-Also see the [Language Configuration][lang-config] docs and the [Adding
-Languages][adding-languages] guide for more language configuration information.
+更多语言配置信息，请参阅[语言配置][lang-config]文档和[添加语言][adding-languages]指南。
 
 {{#include ./generated/lang-support.md}}
 
