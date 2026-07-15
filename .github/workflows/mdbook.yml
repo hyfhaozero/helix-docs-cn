@@ -1,20 +1,46 @@
-- name: Checkout repo
-  uses: actions/checkout@v4
+name: Build mdBook
 
-- name: Debug - list files and find SUMMARY.md
-  run: |
-    pwd
-    echo "Top-level:"
-    ls -la
-    echo "book dir:"
-    ls -la book || true
-    echo "search for SUMMARY.md:"
-    find . -maxdepth 6 -type f -iname 'SUMMARY.md' -print || true
+on:
+  push:
+    paths:
+      - 'book/**'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'book/**'
 
-- name: Install mdbook (adjust if you have a different setup)
-  run: |
-    cargo install mdbook
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-- name: Build book with mdbook
-  working-directory: ./book
-  run: mdbook build
+      - name: Setup Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install mdbook
+        run: |
+          cargo install mdbook --locked --force
+          # ensure cargo bin dir is on PATH for subsequent steps
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Debug - show repo files and find SUMMARY.md
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Top-level:"
+          ls -la
+          echo "book dir contents:"
+          ls -la book || true
+          echo "Searching for SUMMARY.md (case-insensitive):"
+          find . -maxdepth 6 -type f -iname 'SUMMARY.md' -print || true
+
+      - name: Build book with mdbook
+        working-directory: ./book
+        run: |
+          mdbook build
