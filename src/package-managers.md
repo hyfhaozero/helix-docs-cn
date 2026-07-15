@@ -1,4 +1,4 @@
-## Package managers
+## 包管理器
 
 - [Linux](#linux)
   - [Debian](#debian)

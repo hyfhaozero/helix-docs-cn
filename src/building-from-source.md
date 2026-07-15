@@ -1,4 +1,4 @@
-## Building from source
+## 从源码构建
 
 - [Configuring Helix's runtime files](#configuring-helixs-runtime-files)
   - [Linux and macOS](#linux-and-macos)
