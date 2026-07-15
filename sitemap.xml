@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 主页面 -->
+  <url>
+    <loc>https://zero2one.de5.net/helix-docs-cn/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- 这个文件会由 GitHub Actions 在构建时自动更新和扩展 -->
+  <!-- 请勿手动编辑下方内容 -->
+  <!-- AUTO_GENERATED_URLS_START -->
+  <!-- AUTO_GENERATED_URLS_END -->
+</urlset>
