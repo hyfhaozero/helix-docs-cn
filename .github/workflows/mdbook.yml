@@ -3,11 +3,11 @@ name: Build mdBook
 on:
   push:
     paths:
-      - 'book/**'
+      - './**'
       - '.github/workflows/**'
   pull_request:
     paths:
-      - 'book/**'
+      - './**'
 
 jobs:
   build:
@@ -41,6 +41,6 @@ jobs:
           find . -maxdepth 6 -type f -iname 'SUMMARY.md' -print || true
 
       - name: Build book with mdbook
-        working-directory: ./book
+        working-directory: ./
         run: |
           mdbook build
