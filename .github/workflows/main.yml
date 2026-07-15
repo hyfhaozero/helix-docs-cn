@@ -28,6 +28,12 @@ jobs:
       - name: Build the book
         run: mdbook build   # 直接在根目录构建，因为 book.toml 就在根目录
 
+      - name: Copy BingSiteAuth.xml to book output
+        run: cp BingSiteAuth.xml ./book/BingSiteAuth.xml
+
+      - name: Copy sitemap.xml to book output
+        run: cp sitemap.xml ./book/sitemap.xml
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
