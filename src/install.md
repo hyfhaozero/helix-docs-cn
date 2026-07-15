@@ -1,6 +1,6 @@
 # 安装Helix
 
-Helix的通常通过您系统使用的包管理器[包管理器](./package-managers.md)安装. 
+Helix通常通过您系统使用的包管理器[包管理器](./package-managers.md)进行安装. 
 请注意:
 
 - 获取最新的Nightly版本的Helix, 您需要
