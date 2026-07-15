@@ -170,7 +170,7 @@ packl install helix
 
 ### MSYS2
 
-For 64-bit Windows 8.1 or above:
+对于 64 位的 Windows 8.1 或更高版本：
 
 ```sh
 pacman -S mingw-w64-ucrt-x86_64-helix
