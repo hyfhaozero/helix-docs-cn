@@ -20,11 +20,11 @@
   - [Packably](#packably)
   - [MSYS2](#msys2)
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/helix-editor.svg)](https://repology.org/project/helix-editor/versions)
+[![打包状态](https://repology.org/badge/vertical-allrepos/helix-editor.svg)](https://repology.org/project/helix-editor/versions)
 
 ## Linux
 
-The following third party repositories are available:
+以下第三方仓库可用：
 
 ### Debian
 
@@ -32,15 +32,13 @@ The following third party repositories are available:
 sudo apt install hx
 ```
 
-If you are running a system older than Debian 13, follow the steps for
-[Ubuntu/Mint](#ubuntumint).
+如果你的系统版本低于 Debian 13，请按照 [Ubuntu/Mint](#ubuntumint) 的步骤操作。
 
 ### Ubuntu/Mint
 
-Install the Debian package [from the release page](https://github.com/helix-editor/helix/releases/latest).
+从[发布页面](https://github.com/helix-editor/helix/releases/latest)安装 Debian 软件包。
 
-If you are running a system older than Ubuntu 22.04, Mint 21, or Debian 12, you can build the `.deb` file locally
-[from source](./building-from-source.md#building-the-debian-package).
+如果你的系统版本低于 Ubuntu 22.04、Mint 21 或 Debian 12，你可以在本地[从源码构建](./building-from-source.md#building-the-debian-package)构建 `.deb` 文件。
 
 ### Fedora/RHEL
 
@@ -50,41 +48,38 @@ sudo dnf install helix
 
 ### Arch Linux extra
 
-Releases are available in the `extra` repository:
-
+发布版本可在 `extra` 软件源中找到：
 ```sh
 sudo pacman -S helix
 ```
 
-> 💡 When installed from the `extra` repository, run Helix with `helix` instead of `hx`.
+> 💡 从 Arch Linux `extra` 仓库安装后，运行 Helix 时请使用 `helix` 而不是 `hx`。
 >
-> For example:
+> 例如:
 > ```sh
 > helix --health
 > ```
-> to check health
+> 检查 Helix 健康状态
 
-Additionally, a [helix-git](https://aur.archlinux.org/packages/helix-git/) package is available
-in the AUR, which builds the master branch.
+此外，AUR 中还有一个 [helix-git](https://aur.archlinux.org/packages/helix-git/) 包，它从 master 分支构建。
 
 ### NixOS
 
-Helix is available in [nixpkgs](https://github.com/nixos/nixpkgs) through the `helix` attribute,
-the unstable channel usually carries the latest release.
+Helix 可通过 `helix` 属性在 [nixpkgs](https://github.com/nixos/nixpkgs) 中获得，
+不稳定通道通常携带最新版本。
 
-Helix is also available as a [flake](https://wiki.nixos.org/wiki/Flakes) in the project
-root. Use `nix develop` to spin up a reproducible development shell. Outputs are
-cached for each push to master using [Cachix](https://www.cachix.org/). The
-flake is configured to automatically make use of this cache assuming the user
-accepts the new settings on first use.
+Helix 在项目根目录中也可作为 [flake](https://wiki.nixos.org/wiki/Flakes) 使用。
+使用 `nix develop` 启动一个可复现的开发环境。
+每次推送到 master 分支的输出都会使用 [Cachix](https://www.cachix.org/) 进行缓存。
+flake 已配置为自动使用此缓存，前提是用户首次使用时接受新设置。
 
-If you are using a version of Nix without flakes enabled,
-[install Cachix CLI](https://docs.cachix.org/installation) and use
-`cachix use helix` to configure Nix to use cached outputs when possible.
+如果你使用的 Nix 版本未启用 flakes，
+请[安装 Cachix CLI](https://docs.cachix.org/installation) 并使用
+`cachix use helix` 配置 Nix，以便在可能的情况下使用缓存的输出。
 
 ### Flatpak
 
-Helix is available on [Flathub](https://flathub.org/en-GB/apps/com.helix_editor.Helix):
+Helix 可在 [Flathub](https://flathub.org/en-GB/apps/com.helix_editor.Helix) 上获取：
 
 ```sh
 flatpak install flathub com.helix_editor.Helix
@@ -93,47 +88,45 @@ flatpak run com.helix_editor.Helix
 
 ### Snap
 
-Helix is available on [Snapcraft](https://snapcraft.io/helix) and can be installed with:
+Helix 可在 [Snapcraft](https://snapcraft.io/helix) 上获取，可以通过以下命令安装：
 
 ```sh
 snap install --classic helix
 ```
 
-This will install Helix as both `/snap/bin/helix` and `/snap/bin/hx`, so make sure `/snap/bin` is in your `PATH`.
+这将把 Helix 安装为 `/snap/bin/helix` 和 `/snap/bin/hx`，因此请确保 `/snap/bin` 在你的 `PATH` 中。
 
 ### AppImage
 
-Install Helix using the Linux [AppImage](https://appimage.org/) format.
-Download the official Helix AppImage from the [latest releases](https://github.com/helix-editor/helix/releases/latest) page.
+Install Helix using the Linux [AppImage](https://appimage.org/) 格式。
+从 [最新发布版本](https://github.com/helix-editor/helix/releases/latest) 页面下载官方 Helix AppImage。
 
 ```sh
 chmod +x helix-*.AppImage # change permission for executable mode
 ./helix-*.AppImage # run helix
 ```
 
-You can optionally [add the `.desktop` file](./building-from-source.md#configure-the-desktop-shortcut). Helix must be installed in `PATH` with the name `hx`. For example:
+你可以选择[添加 `.desktop` 文件](./building-from-source.md#configure-the-desktop-shortcut)。Helix 必须安装在 `PATH` 中，且名称为 `hx`。例如：
 ```sh
 mkdir -p "$HOME/.local/bin"
 mv helix-*.AppImage "$HOME/.local/bin/hx"
-```
-
-and make sure `~/.local/bin` is in your `PATH`.
+并确保 ~/.local/bin 在你的 PATH 中。
 
 ### Linux Homebrew Core
 
-Checkout the [macOS](#homebrew-core) instructions below.
+请查看下面的 [macOS](#homebrew-core) 安装说明。
 
 ## macOS
 
 ### Homebrew Core
 
-Install the latest release:
+安装最新发布版本：
 
 ```sh
 brew install helix
 ```
 
-Or, install the latest nightly version:
+或者，安装最新的 nightly 版本：
 
 ```sh
 brew install --HEAD helix
@@ -147,12 +140,11 @@ sudo port install helix
 
 ## Windows
 
-Install on Windows using [Winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/), [Scoop](https://scoop.sh/), [Chocolatey](https://chocolatey.org/), [Packably](https://www.packably.com.br/)
-or [MSYS2](https://msys2.org/).
+在 Windows 上可使用 [Winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/)、[Scoop](https://scoop.sh/)、[Chocolatey](https://chocolatey.org/)、[Packably](https://www.packably.com.br/) 或 [MSYS2](https://msys2.org/) 进行安装。
 
 ### Winget
-Windows Package Manager winget command-line tool is by default available on Windows 11 and modern versions of Windows 10 as a part of the App Installer.
-You can get [App Installer from the Microsoft Store](https://www.microsoft.com/p/app-installer/9nblggh4nns1#activetab=pivot:overviewtab). If it's already installed, make sure it is updated with the latest version.
+Windows Package Manager（winget）命令行工具默认作为应用安装程序的一部分，在 Windows 11 和现代版本的 Windows 10 上可用。
+你可以从 [Microsoft Store 获取应用安装程序](https://www.microsoft.com/p/app-installer/9nblggh4nns1#activetab=pivot:overviewtab)。如果已安装，请确保将其更新到最新版本。
 
 ```sh
 winget install Helix.Helix

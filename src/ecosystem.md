@@ -1,3 +1,3 @@
-# Ecosystem
+# 生态系统
 
-This section has information related to the wider Helix ecosystem. 
+本节包含 Helix 生态系统相关的信息。

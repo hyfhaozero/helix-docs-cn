@@ -1,4 +1,4 @@
-| Language | Syntax Highlighting | Treesitter Textobjects | Auto Indent | Code Navigation Tags | Rainbow Brackets | Default language servers |
+| 语言 | 语法高亮 | Treesitter 文本对象 | 自动缩进 | 代码导航标签 | 彩虹括号 | 默认语言服务器 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ada | ✓ | ✓ |  |  |  | `ada_language_server` |
 | adl | ✓ | ✓ | ✓ |  |  |  |

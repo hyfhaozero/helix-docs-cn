@@ -1,54 +1,46 @@
-## Registers
+## 寄存器
 
-- [User-defined registers](#user-defined-registers)
-- [Default registers](#default-registers)
-- [Special registers](#special-registers)
+- [用户定义寄存器](#用户定义寄存器)
+- [默认寄存器](#默认寄存器)
+- [特殊寄存器](#特殊寄存器)
 
-In Helix, registers are storage locations for text and other data, such as the
-result of a search. Registers can be used to cut, copy, and paste text, similar
-to the clipboard in other text editors. Usage is similar to Vim, with `"` being
-used to select a register.
+在 Helix 中，寄存器是用于存储文本和其他数据（例如搜索结果）的存储位置。寄存器可用于剪切、复制和粘贴文本，类似于其他文本编辑器中的剪贴板。用法与 Vim 类似，使用 `"` 来选择寄存器。
 
-### User-defined registers
+### 用户定义寄存器
 
-Helix allows you to create your own named registers for storing text, for
-example:
+Helix 允许你创建自己的命名寄存器来存储文本，例如：
 
-- `"ay` - Yank the current selection to register `a`.
-- `"op` - Paste the text in register `o` after the selection.
+- `"ay` - 将当前选区复制到寄存器 `a`。
+- `"op` - 将寄存器 `o` 中的文本粘贴到选区之后。
 
-If a register is selected before invoking a change or delete command, the selection will be stored in the register and the action will be carried out:
+如果在调用修改或删除命令之前选择了寄存器，选区将被存储在该寄存器中，并执行该操作：
 
-- `"hc` - Store the selection in register `h` and then change it (delete and enter insert mode).
-- `"md` - Store the selection in register `m` and delete it.
+- `"hc` - 将选区存储在寄存器 `h` 中，然后修改它（删除并进入插入模式）。
+- `"md` - 将选区存储在寄存器 `m` 中并删除它。
 
-### Default registers
+### 默认寄存器
 
-Commands that use registers, like yank (`y`), use a default register if none is specified.
-These registers are used as defaults:
+使用寄存器的命令（如复制 `y`）在未指定寄存器时会使用默认寄存器。
+以下寄存器用作默认值：
 
-| Register character | Contains              |
+| 寄存器字符 | 包含内容              |
 | ---                | ---                   |
-| `/`                | Last search           |
-| `:`                | Last executed command |
-| `"`                | Last yanked text      |
-| `@`                | Last recorded macro   |
+| `/`                | 最后一次搜索           |
+| `:`                | 最后执行的命令 |
+| `"`                | 最后复制的文本      |
+| `@`                | 最后录制的宏   |
 
-### Special registers
+### 特殊寄存器
 
-Some registers have special behavior when read from and written to.
+某些寄存器在读取和写入时具有特殊行为。
 
-| Register character | When read              | When written             |
+| 寄存器字符 | 读取时              | 写入时             |
 | ---                | ---                    | ---                      |
-| `_`                | No values are returned | All values are discarded |
-| `#`                | Selection indices (first selection is `1`, second is `2`, etc.) | This register is not writable |
-| `.`                | Contents of the current selections | This register is not writable |
-| `%`                | Name of the current file | This register is not writable |
-| `+`                | Reads from the system clipboard | Joins and yanks to the system clipboard |
-| `*`                | Reads from the primary clipboard | Joins and yanks to the primary clipboard |
+| `_`                | 不返回任何值 | 丢弃所有值 |
+| `#`                | 选区索引（第一个选区为 `1`，第二个为 `2`，依此类推） | 此寄存器不可写入 |
+| `.`                | 当前选区的内容 | 此寄存器不可写入 |
+| `%`                | 当前文件的名称 | 此寄存器不可写入 |
+| `+`                | 从系统剪贴板读取 | 连接并复制到系统剪贴板 |
+| `*`                | 从主剪贴板读取 | 连接并复制到主剪贴板 |
 
-When yanking multiple selections to the clipboard registers, the selections
-are joined with newlines. Pasting from these registers will paste multiple
-selections if the clipboard was last yanked to by the Helix session. Otherwise
-the clipboard contents are pasted as one selection.
-
+当将多个选区复制到剪贴板寄存器时，选区会用换行符连接。如果剪贴板最后一次是由 Helix 会话复制到的，则从这些寄存器粘贴时会粘贴多个选区。否则，剪贴板内容将作为一个选区粘贴。
