@@ -1,24 +1,23 @@
-# Installing Helix
+# 安装Helix
 
-The typical way to install Helix is via [your operating system's package manager](./package-managers.md).
+Helix的通常通过您系统使用的包管理器[包管理器](./package-managers.md)安装. 
+请注意:
 
-Note that:
+- 获取最新的Nightly版本的Helix, 您需要
+  [从源代码构建Helix](./building-from-source.md).
 
-- To get the latest nightly version of Helix, you need to
-  [build from source](./building-from-source.md).
-
-- To take full advantage of Helix, install the language servers for your
-  preferred programming languages. See the
+- 为了充分利用Helix的功能, 请您安装您首选的编程语言的语言服务器. (可在
   [wiki](https://github.com/helix-editor/helix/wiki/Language-Server-Configurations)
-  for instructions.
+  查看说明)
 
-## Pre-built binaries
+## 下载预构建的二进制文件
 
-Download pre-built binaries from the [GitHub Releases page](https://github.com/helix-editor/helix/releases).
-The tarball contents include an `hx` binary and a `runtime` directory.
-To set up Helix:
+从[GitHub Releases page](https://github.com/helix-editor/helix/releases).下载最新的预构建二进制文件.
+预构建二进制文件包含二进制文件 `hx` 和一个 `runtime` 目录.
+设置Helix:
 
-1. Add the `hx` binary to your system's `$PATH` to allow it to be used from the command line.
-2. Copy the `runtime` directory to a location that `hx` searches for runtime files. A typical location on Linux/macOS is `~/.config/helix/runtime`.
+1. 将系统中的 `hx` 二进制文件添加到 `$PATH`.
+2. 将 `runtime` 目录复制到 `hx` 搜索运行时文件的路径. 在Linux/macOS上, `runtime`目录通常是 `~/.config/helix/runtime`.
 
-To see the runtime directories that `hx` searches, run `hx --health`. If necessary, you can override the default runtime location by setting the `HELIX_RUNTIME` environment variable.
+要查看 `hx` 搜索的运行时目录, 请运行命令 `hx --health`. 如果需要, 您可以设置环境变量
+  `HELIX_RUNTIME`.
