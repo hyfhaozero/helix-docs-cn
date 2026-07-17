@@ -19,11 +19,7 @@
 
 ### `@local.definition.*`
 
-Marks a name node as introducing a local symbol. The suffix after
-`@local.definition.` becomes the highlight class applied to any reference that
-resolves to this definition. For example, `@local.definition.variable.parameter`
-causes matching references to be highlighted as `variable.parameter`.
-
+将名称节点标记为引入局部符号。`@local.definition.` 之后的后缀成为应用于解析到该定义的任何引用的高亮类别。例如，`@local.definition.variable.parameter` 会使匹配的引用被高亮为 `variable.parameter`。
 ```scm
 (function_item
   (parameters
@@ -31,55 +27,34 @@ causes matching references to be highlighted as `variable.parameter`.
       pattern: (identifier) @local.definition.variable.parameter)))
 ```
 
-Common suffixes mirror the highlight classes in `highlights.scm`:
-`variable`, `variable.parameter`, `variable.builtin`, `variable.mutable`,
-`function`, `namespace`, `type`, `constant`, etc.
+常见的后缀与 `highlights.scm` 中的高亮类别相对应：`variable`、`variable.parameter`、`variable.builtin`、`variable.mutable`、`function`、`namespace`、`type`、`constant` 等。
 
 ### `@local.reference`
 
-Marks an identifier node as a potential reference to a local definition.
-Helix searches enclosing scopes for a matching definition and, if found,
-highlights the reference with that definition's class instead.
+将标识符节点标记为对局部定义的潜在引用。Helix 会在封闭的作用域中搜索匹配的定义，如果找到，则使用该定义的高亮类别来高亮该引用。
 
 ```scm
 (identifier) @local.reference
 ```
 
-## Discard captures
+## 丢弃捕获
 
-Any capture in `locals.scm` that is not `@local.scope`, `@local.reference`, or
-`@local.definition.*` acts as a discard. It prevents a `@local.reference` from
-being resolved at that node without affecting the `highlights.scm` result. This
-is useful for identifier nodes that look like references but should not be
-treated as variable references, for example keyword argument names or struct
-field names in struct literals.
+`locals.scm` 中任何不是 `@local.scope`、`@local.reference` 或 `@local.definition.*` 的捕获都充当丢弃捕获。它会阻止 `@local.reference` 在该节点处被解析，但不影响 `highlights.scm` 的结果。这对于那些看起来像引用但不应被视为变量引用的标识符节点很有用，例如关键字参数名称或结构体字面量中的结构体字段名称。
 
 ```scm
-; Keyword argument names in a call are not variable references.
+; 调用中的关键字参数名称不是变量引用。
 (keyword_argument
   name: (identifier) @_)
 ```
 
-Later patterns in a query file have higher precedence than earlier ones. A
-discard pattern must appear after the `@local.reference` pattern it is intended
-to override. Placing it later ensures it takes precedence and cancels the
-reference resolution for nodes it matches.
+查询文件中较晚的模式比较早的模式具有更高的优先级。丢弃模式必须出现在它要覆盖的 `@local.reference` 模式之后。将其放在后面可确保它具有更高的优先级，并取消对匹配节点的引用解析。
 
-The convention is to use a capture name beginning with an underscore (e.g. `@_`,
-`@_keyword`) to make the discard intent clear, but any non-`@local.*` name works.
+约定使用以下划线开头的捕获名称（例如 `@_`、`@_keyword`）来明确丢弃意图，但任何非 `@local.*` 的名称都可以。h
 
-## How definitions and references are matched
+## 定义和引用如何匹配
 
-Helix matches references to definitions by comparing the text of the reference
-node against the text of definitions visible from the current scope. Definitions
-in inner scopes shadow those in outer scopes. If no definition is found the
-reference is left with its `highlights.scm` highlight.
+Helix 通过将引用节点的文本与当前作用域内可见定义的文本进行比较，来将引用匹配到定义。内部作用域中的定义会遮蔽外部作用域中的定义。如果未找到定义，则该引用保留其 `highlights.scm` 中的高亮。
 
-## Relationship with `highlights.scm`
+## 与 `highlights.scm` 的关系
 
-The locals system runs alongside `highlights.scm`, not instead of it.
-`highlights.scm` always determines the baseline highlight for a node.
-`locals.scm` can override that highlight only when a `@local.reference`
-successfully resolves to a `@local.definition`, and only for that specific
-resolution. Non-`@local.*` captures in `locals.scm` (i.e. discards) have no
-effect on `highlights.scm` results.
+locals 系统与 `highlights.scm` 并行运行，而不是取代它。`highlights.scm` 始终确定节点的基准高亮。仅当 `@local.reference` 成功解析到 `@local.definition` 时，`locals.scm` 才能覆盖该高亮，且仅针对该特定解析。`locals.scm` 中非 `@local.*` 的捕获（即丢弃捕获）对 `highlights.scm` 的结果没有影响。

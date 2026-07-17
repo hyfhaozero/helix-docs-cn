@@ -1,20 +1,15 @@
-## Adding Injection Queries
+## 添加注入查询
 
-Writing language injection queries allows one to highlight a specific node as a different language.
-In addition to the [standard][upstream-docs] language injection options used by tree-sitter, there
-are a few Helix specific extensions that allow for more control.
+编写语言注入查询允许将特定节点高亮为不同的语言。除了 tree-sitter 使用的[标准][upstream-docs]语言注入选项外，还有一些 Helix 特定的扩展，可提供更多控制。
 
-Injection drives more than highlighting: within an injected region Helix also
-uses the injected language's own indentation, textobjects, and comment tokens —
-so, for example, editing JavaScript inside an HTML `<script>` indents and
-comments as JavaScript.
+注入不仅仅驱动高亮：在注入区域内，Helix 还会使用注入语言自身的缩进、文本对象和注释标记——例如，在 HTML 的 `<script>` 标签内编辑 JavaScript 时，缩进和注释会按照 JavaScript 的规则进行。
 
-An example of a simple query that would highlight all strings as bash in Nix:
+一个简单的查询示例，将 Nix 中所有字符串高亮为 bash：
 ```scm
 ((string_expression (string_fragment) @injection.content)
   (#set! injection.language "bash"))
 ```
-Another example is this query, which highlights links in comments and keywords like "TODO", by reusing the dedicated "comment" language:
+另一个示例是此查询，它通过复用专用的 "comment" 语言，高亮注释中的链接和 "TODO" 等关键词：
 ```scm
 ((comment) @injection.content
   (#set! injection.language "comment"))

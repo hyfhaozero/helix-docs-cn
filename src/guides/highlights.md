@@ -1,53 +1,33 @@
-## Adding highlight queries
+## 添加高亮查询
 
-`highlights.scm` queries assign a highlight scope (`@function`, `@type`,
-`@keyword`, ...) to nodes in the syntax tree; the theme then maps each scope to a
-colour. Highlighting is the one query file that every language needs.
+`highlights.scm` 查询为语法树中的节点分配高亮作用域（`@function`、`@type`、`@keyword` 等）；然后主题将每个作用域映射为一种颜色。高亮查询是每种语言都需要的查询文件。
 
-Query files should be placed in `runtime/queries/{language}/highlights.scm` when
-contributing to Helix.
+在为 Helix 贡献代码时，查询文件应放置在 `runtime/queries/{language}/highlights.scm` 中。
 
-## Scopes
+## 作用域
 
-The full list of highlight scopes, and what each is for, is documented on the
-[themes page]. Match the most specific scope that fits the node — for example a
-method call is `@function.method` while a plain field access is
-`@variable.other.member`.
+完整的高亮作用域列表及其各自用途在[主题页面]中有文档说明。匹配最适合该节点的最特定作用域——例如方法调用是 `@function.method`，而普通字段访问是 `@variable.other.member`。
 
-A query file may reuse another language's with `; inherits: <lang>` on the first
-line (for example `tsx` inherits `typescript`, which inherits `ecma`). An
-inherited file is compiled against *each* inheriting grammar, so every capture
-must be valid there too.
+查询文件可以在第一行使用 `; inherits: <lang>` 来复用其他语言的查询（例如 `tsx` 继承 `typescript`，而 `typescript` 继承 `ecma`）。继承的文件会针对*每个*继承语法进行编译，因此每个捕获在那里也必须有效。
 
-## Precedence
+## 优先级
 
-Two rules decide which capture wins when more than one matches the same text:
+当多个匹配项同时匹配同一段文本时，由两条规则决定哪个捕获获胜：
 
-1. **Same span: last match wins.** Among captures covering the same bytes, the
-   pattern that appears later in the file wins. Put a generic rule *before* the
-   specific one that should override it.
-2. **Nested nodes: innermost wins.** When a parent and a child node both cover
-   the text, the child's capture wins, regardless of file order.
+1. **相同跨度：最后一个匹配获胜。** 在覆盖相同字节的捕获中，文件中出现较晚的模式获胜。将通用规则放在*之前*，将应覆盖它的特定规则放在之后。
+2. **嵌套节点：最内层获胜。** 当父节点和子节点都覆盖该文本时，子节点的捕获获胜，无论文件顺序如何。
 
-A common consequence of rule 2: capture the *leaf* you mean. A call captured on
-a wrapping node loses to a base `(identifier) @variable` on the inner identifier,
-so put `@function` on the identifier itself.
+规则 2 的一个常见结果：捕获你指代的*叶子节点*。包裹节点上的调用捕获会输给内部标识符上的基础 `(identifier) @variable`，因此将 `@function` 放在标识符本身上。
 
-Where the grammar can't distinguish a scope, casing is often used as a heuristic:
+在语法无法区分作用域的情况下，通常使用命名约定作为启发式方法：
 
 ```scm
 ((identifier) @constant
  (#match? @constant "^[A-Z][A-Z_]*$"))
 ```
 
-## Testing
+## 测试
 
-`cargo xtask query-check [language]` confirms the queries are valid against the
-grammar. `cargo xtask highlight-check [language]` runs the real highlighter over
-the fixtures in `tests/query/highlights/<language-id>/<name>.<ext>`, where a
-caret comment line (`// ^ @capture`) asserts the winning scope at the column
-above it; this catches the precedence mistakes that `query-check` cannot see.
-`cargo xtask highlight-check --dump <language> <file>` prints the winning capture
-per span for an arbitrary file.
+`cargo xtask query-check [language]` 确认查询文件针对该语法是否有效。`cargo xtask highlight-check [language]` 在 `tests/query/highlights/<language-id>/<name>.<ext>` 中的测试用例上运行真正的高亮器，其中插入符注释行（`// ^ @capture`）断言其上方列处的获胜作用域；这可以捕获 `query-check` 无法看到的优先级错误。`cargo xtask highlight-check --dump <language> <file>` 打印任意文件中每个跨度的获胜捕获。
 
 [themes page]: https://docs.helix-editor.com/themes.html#scopes
