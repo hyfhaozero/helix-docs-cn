@@ -1,102 +1,102 @@
-| Name | Description |
+| 名称 | 描述 |
 | --- | --- |
-| `:exit`, `:x`, `:xit` | Write changes to disk if the buffer is modified and then quit. Accepts an optional path (:exit some/path.txt). |
-| `:exit!`, `:x!`, `:xit!` | Force write changes to disk, creating necessary subdirectories, if the buffer is modified and then quit. Accepts an optional path (:exit! some/path.txt). |
-| `:quit`, `:q` | Close the current view. |
-| `:quit!`, `:q!` | Force close the current view, ignoring unsaved changes. |
-| `:open`, `:o`, `:edit`, `:e` | Open a file from disk into the current view. |
-| `:buffer-close`, `:bc`, `:bclose` | Close the current buffer. |
-| `:buffer-close!`, `:bc!`, `:bclose!` | Close the current buffer forcefully, ignoring unsaved changes. |
-| `:buffer-close-others`, `:bco`, `:bcloseother` | Close all buffers but the currently focused one. |
-| `:buffer-close-others!`, `:bco!`, `:bcloseother!` | Force close all buffers but the currently focused one. |
-| `:buffer-close-all`, `:bca`, `:bcloseall` | Close all buffers without quitting. |
-| `:buffer-close-all!`, `:bca!`, `:bcloseall!` | Force close all buffers ignoring unsaved changes without quitting. |
-| `:buffer-next`, `:bn`, `:bnext` | Goto next buffer. |
-| `:buffer-previous`, `:bp`, `:bprev` | Goto previous buffer. |
-| `:write`, `:w` | Write changes to disk. Accepts an optional path (:write some/path.txt) |
-| `:write!`, `:w!` | Force write changes to disk creating necessary subdirectories. Accepts an optional path (:write! some/path.txt) |
-| `:write-buffer-close`, `:wbc` | Write changes to disk and closes the buffer. Accepts an optional path (:write-buffer-close some/path.txt) |
-| `:write-buffer-close!`, `:wbc!` | Force write changes to disk creating necessary subdirectories and closes the buffer. Accepts an optional path (:write-buffer-close! some/path.txt) |
-| `:new`, `:n` | Create a new scratch buffer. |
-| `:format`, `:fmt` | Format the file using an external formatter or language server. |
-| `:indent-style` | Set the indentation style for editing. ('t' for tabs or 1-16 for number of spaces.) |
-| `:line-ending` | Set the document's default line ending. Options: crlf, lf. |
-| `:earlier`, `:ear` | Jump back to an earlier point in edit history. Accepts a number of steps or a time span. |
-| `:later`, `:lat` | Jump to a later point in edit history. Accepts a number of steps or a time span. |
-| `:write-quit`, `:wq` | Write changes to disk and close the current view. Accepts an optional path (:wq some/path.txt) |
-| `:write-quit!`, `:wq!` | Write changes to disk and close the current view forcefully. Accepts an optional path (:wq! some/path.txt) |
-| `:write-all`, `:wa` | Write changes from all buffers to disk. |
-| `:write-all!`, `:wa!` | Forcefully write changes from all buffers to disk creating necessary subdirectories. |
-| `:write-quit-all`, `:wqa`, `:xa` | Write changes from all buffers to disk and close all views. |
-| `:write-quit-all!`, `:wqa!`, `:xa!` | Forcefully write changes from all buffers to disk, creating necessary subdirectories, and close all views (ignoring unsaved changes). |
-| `:quit-all`, `:qa` | Close all views. |
-| `:quit-all!`, `:qa!` | Force close all views ignoring unsaved changes. |
-| `:cquit`, `:cq` | Quit with exit code (default 1). Accepts an optional integer exit code (:cq 2). |
-| `:cquit!`, `:cq!` | Force quit with exit code (default 1) ignoring unsaved changes. Accepts an optional integer exit code (:cq! 2). |
-| `:theme` | Change the editor theme (show current theme if no name specified). |
-| `:yank-join` | Yank joined selections. A separator can be provided as first argument. Default value is newline. |
-| `:clipboard-yank` | Yank main selection into system clipboard. |
-| `:clipboard-yank-join` | Yank joined selections into system clipboard. A separator can be provided as first argument. Default value is newline. |
-| `:primary-clipboard-yank` | Yank main selection into system primary clipboard. |
-| `:primary-clipboard-yank-join` | Yank joined selections into system primary clipboard. A separator can be provided as first argument. Default value is newline. |
-| `:clipboard-paste-after` | Paste system clipboard after selections. |
-| `:clipboard-paste-before` | Paste system clipboard before selections. |
-| `:clipboard-paste-replace` | Replace selections with content of system clipboard. |
-| `:primary-clipboard-paste-after` | Paste primary clipboard after selections. |
-| `:primary-clipboard-paste-before` | Paste primary clipboard before selections. |
-| `:primary-clipboard-paste-replace` | Replace selections with content of system primary clipboard. |
-| `:show-clipboard-provider` | Show clipboard provider name in status bar. |
-| `:change-current-directory`, `:cd` | Change the current working directory. |
-| `:show-directory-stack` | Show the directory stack as a <space> delimited string. |
-| `:push-directory`, `:pushd` | Save and then change the current directory. |
-| `:pop-directory`, `:popd` | Remove the top entry from the directory stack, and cd to the new top directory.. |
-| `:show-directory`, `:pwd` | Show the current working directory. |
-| `:encoding` | Set encoding. Based on `https://encoding.spec.whatwg.org`. |
-| `:character-info`, `:char` | Get info about the character under the primary cursor. |
-| `:reload`, `:rl` | Discard changes and reload from the source file. |
-| `:reload-all`, `:rla` | Discard changes and reload all documents from the source files. |
-| `:update`, `:u` | Write changes only if the file has been modified. |
-| `:lsp-workspace-command` | Open workspace command picker |
-| `:lsp-restart` | Restarts the given language servers, or all language servers that are used by the current file if no arguments are supplied |
-| `:lsp-stop` | Stops the given language servers, or all language servers that are used by the current file if no arguments are supplied |
-| `:tree-sitter-scopes` | Display tree sitter scopes, primarily for theming and development. |
-| `:tree-sitter-highlight-name` | Display name of tree-sitter highlight scope under the cursor. |
-| `:tree-sitter-layers` | Display language names of tree-sitter injection layers under the cursor. |
-| `:debug-start`, `:dbg` | Start a debug session from a given template with given parameters. |
-| `:debug-remote`, `:dbg-tcp` | Connect to a debug adapter by TCP address and start a debugging session from a given template with given parameters. |
-| `:debug-eval` | Evaluate expression in current debug context. |
-| `:vsplit`, `:vs` | Open the file in a vertical split. |
-| `:vsplit-new`, `:vnew` | Open a scratch buffer in a vertical split. |
-| `:hsplit`, `:hs`, `:sp` | Open the file in a horizontal split. |
-| `:hsplit-new`, `:hnew` | Open a scratch buffer in a horizontal split. |
-| `:tutor` | Open the tutorial. |
-| `:goto`, `:g` | Goto line number. |
-| `:set-language`, `:lang` | Set the language of current buffer (show current language if no value specified). |
-| `:set-option`, `:set` | Set a config option at runtime.<br>For example to disable smart case search, use `:set search.smart-case false`. |
-| `:toggle-option`, `:toggle` | Toggle a config option at runtime.<br>For example to toggle smart case search, use `:toggle search.smart-case`. |
-| `:get-option`, `:get` | Get the current value of a config option. |
-| `:sort` | Sort ranges in selection. |
-| `:reflow` | Hard-wrap the current selection of lines to a given width. |
-| `:tree-sitter-subtree`, `:ts-subtree` | Display the smallest tree-sitter subtree that spans the primary selection, primarily for debugging queries. |
-| `:config-reload` | Refresh user config. |
-| `:config-open` | Open the user config.toml file. |
-| `:config-open-workspace` | Open the workspace config.toml file. |
-| `:log-open` | Open the helix log file. |
-| `:insert-output` | Run shell command, inserting output before each selection. |
-| `:append-output` | Run shell command, appending output after each selection. |
-| `:pipe`, `:\|` | Pipe each selection to the shell command. |
-| `:pipe-to` | Pipe each selection to the shell command, ignoring output. |
-| `:run-shell-command`, `:sh`, `:!` | Run a shell command |
-| `:reset-diff-change`, `:diffget`, `:diffg` | Reset the diff change at the cursor position. |
-| `:clear-register` | Clear given register. If no argument is provided, clear all registers. |
-| `:set-register` | Set contents of the given register. |
-| `:redraw` | Clear and re-render the whole UI |
-| `:move`, `:mv` | Move the current buffer and its corresponding file to a different path |
-| `:move!`, `:mv!` | Move the current buffer and its corresponding file to a different path creating necessary subdirectories |
-| `:yank-diagnostic` | Yank diagnostic(s) under primary cursor to register, or clipboard by default |
-| `:read`, `:r` | Load a file into buffer |
-| `:echo` | Prints the given arguments to the statusline. |
-| `:noop` | Does nothing. |
-| `:workspace-trust` | Allow language servers and local config for the current workspace. |
-| `:workspace-untrust` | Revoke the current workspace's trust grant or exclusion. |
-| `:workspace-exclude` | Mark the current workspace as never-prompt. Never prompts for trust again. |
+| `:exit`, `:x`, `:xit` | 若缓冲区已修改则写入磁盘并退出。接受可选路径（:exit some/path.txt）。 |
+| `:exit!`, `:x!`, `:xit!` | 若缓冲区已修改则强制写入磁盘，创建必要的子目录，然后退出。接受可选路径（:exit! some/path.txt）。 |
+| `:quit`, `:q` | 关闭当前视图。 |
+| `:quit!`, `:q!` | 强制关闭当前视图，忽略未保存的更改。 |
+| `:open`, `:o`, `:edit`, `:e` | 从磁盘打开文件到当前视图。 |
+| `:buffer-close`, `:bc`, `:bclose` | 关闭当前缓冲区。 |
+| `:buffer-close!`, `:bc!`, `:bclose!` | 强制关闭当前缓冲区，忽略未保存的更改。 |
+| `:buffer-close-others`, `:bco`, `:bcloseother` | 关闭除当前焦点缓冲区外的所有缓冲区。 |
+| `:buffer-close-others!`, `:bco!`, `:bcloseother!` | 强制关闭除当前焦点缓冲区外的所有缓冲区。 |
+| `:buffer-close-all`, `:bca`, `:bcloseall` | 关闭所有缓冲区但不退出。 |
+| `:buffer-close-all!`, `:bca!`, `:bcloseall!` | 强制关闭所有缓冲区，忽略未保存的更改，但不退出。 |
+| `:buffer-next`, `:bn`, `:bnext` | 转到下一个缓冲区。 |
+| `:buffer-previous`, `:bp`, `:bprev` | 转到上一个缓冲区。 |
+| `:write`, `:w` | 将更改写入磁盘。接受可选路径（:write some/path.txt）。 |
+| `:write!`, `:w!` | 强制将更改写入磁盘，创建必要的子目录。接受可选路径（:write! some/path.txt）。 |
+| `:write-buffer-close`, `:wbc` | 将更改写入磁盘并关闭缓冲区。接受可选路径（:write-buffer-close some/path.txt）。 |
+| `:write-buffer-close!`, `:wbc!` | 强制将更改写入磁盘，创建必要的子目录，并关闭缓冲区。接受可选路径（:write-buffer-close! some/path.txt）。 |
+| `:new`, `:n` | 创建新的暂存缓冲区。 |
+| `:format`, `:fmt` | 使用外部格式化程序或语言服务器格式化文件。 |
+| `:indent-style` | 设置编辑时的缩进样式。（'t' 表示制表符，或 1-16 表示空格数。） |
+| `:line-ending` | 设置文档的默认换行符。选项：crlf、lf。 |
+| `:earlier`, `:ear` | 跳转到编辑历史中更早的时间点。接受步数或时间跨度。 |
+| `:later`, `:lat` | 跳转到编辑历史中更晚的时间点。接受步数或时间跨度。 |
+| `:write-quit`, `:wq` | 将更改写入磁盘并关闭当前视图。接受可选路径（:wq some/path.txt）。 |
+| `:write-quit!`, `:wq!` | 将更改写入磁盘并强制关闭当前视图。接受可选路径（:wq! some/path.txt）。 |
+| `:write-all`, `:wa` | 将所有缓冲区的更改写入磁盘。 |
+| `:write-all!`, `:wa!` | 强制将所有缓冲区的更改写入磁盘，创建必要的子目录。 |
+| `:write-quit-all`, `:wqa`, `:xa` | 将所有缓冲区的更改写入磁盘并关闭所有视图。 |
+| `:write-quit-all!`, `:wqa!`, `:xa!` | 强制将所有缓冲区的更改写入磁盘，创建必要的子目录，并关闭所有视图（忽略未保存的更改）。 |
+| `:quit-all`, `:qa` | 关闭所有视图。 |
+| `:quit-all!`, `:qa!` | 强制关闭所有视图，忽略未保存的更改。 |
+| `:cquit`, `:cq` | 以退出码退出（默认 1）。接受可选的整数退出码（:cq 2）。 |
+| `:cquit!`, `:cq!` | 强制以退出码退出（默认 1），忽略未保存的更改。接受可选的整数退出码（:cq! 2）。 |
+| `:theme` | 更改编辑器主题（若未指定名称则显示当前主题）。 |
+| `:yank-join` | 复制合并后的选区。可提供分隔符作为第一个参数。默认值为换行符。 |
+| `:clipboard-yank` | 将主选区复制到系统剪贴板。 |
+| `:clipboard-yank-join` | 将合并后的选区复制到系统剪贴板。可提供分隔符作为第一个参数。默认值为换行符。 |
+| `:primary-clipboard-yank` | 将主选区复制到系统主剪贴板。 |
+| `:primary-clipboard-yank-join` | 将合并后的选区复制到系统主剪贴板。可提供分隔符作为第一个参数。默认值为换行符。 |
+| `:clipboard-paste-after` | 在选区后粘贴系统剪贴板内容。 |
+| `:clipboard-paste-before` | 在选区前粘贴系统剪贴板内容。 |
+| `:clipboard-paste-replace` | 用系统剪贴板内容替换选区。 |
+| `:primary-clipboard-paste-after` | 在选区后粘贴主剪贴板内容。 |
+| `:primary-clipboard-paste-before` | 在选区前粘贴主剪贴板内容。 |
+| `:primary-clipboard-paste-replace` | 用系统主剪贴板内容替换选区。 |
+| `:show-clipboard-provider` | 在状态栏中显示剪贴板提供程序名称。 |
+| `:change-current-directory`, `:cd` | 更改当前工作目录。 |
+| `:show-directory-stack` | 以空格分隔的字符串显示目录栈。 |
+| `:push-directory`, `:pushd` | 保存当前目录并切换目录。 |
+| `:pop-directory`, `:popd` | 移除目录栈顶条目，并切换到新的栈顶目录。 |
+| `:show-directory`, `:pwd` | 显示当前工作目录。 |
+| `:encoding` | 设置编码。基于 `https://encoding.spec.whatwg.org`。 |
+| `:character-info`, `:char` | 获取主光标下字符的信息。 |
+| `:reload`, `:rl` | 丢弃更改并从源文件重新加载。 |
+| `:reload-all`, `:rla` | 丢弃更改并从源文件重新加载所有文档。 |
+| `:update`, `:u` | 仅当文件已修改时写入更改。 |
+| `:lsp-workspace-command` | 打开工作区命令选择器。 |
+| `:lsp-restart` | 重启指定的语言服务器；若无参数，则重启当前文件使用的所有语言服务器。 |
+| `:lsp-stop` | 停止指定的语言服务器；若无参数，则停止当前文件使用的所有语言服务器。 |
+| `:tree-sitter-scopes` | 显示 tree-sitter 作用域，主要用于主题和开发。 |
+| `:tree-sitter-highlight-name` | 显示光标下 tree-sitter 高亮作用域的名称。 |
+| `:tree-sitter-layers` | 显示光标下 tree-sitter 注入层的语言名称。 |
+| `:debug-start`, `:dbg` | 从给定模板和参数启动调试会话。 |
+| `:debug-remote`, `:dbg-tcp` | 通过 TCP 地址连接到调试适配器，并从给定模板和参数启动调试会话。 |
+| `:debug-eval` | 在当前调试上下文中计算表达式。 |
+| `:vsplit`, `:vs` | 在垂直分割中打开文件。 |
+| `:vsplit-new`, `:vnew` | 在垂直分割中打开暂存缓冲区。 |
+| `:hsplit`, `:hs`, `:sp` | 在水平分割中打开文件。 |
+| `:hsplit-new`, `:hnew` | 在水平分割中打开暂存缓冲区。 |
+| `:tutor` | 打开教程。 |
+| `:goto`, `:g` | 跳转到行号。 |
+| `:set-language`, `:lang` | 设置当前缓冲区的语言（若未指定值则显示当前语言）。 |
+| `:set-option`, `:set` | 在运行时设置配置选项。<br>例如，要禁用智能大小写搜索，使用 `:set search.smart-case false`。 |
+| `:toggle-option`, `:toggle` | 在运行时切换配置选项。<br>例如，要切换智能大小写搜索，使用 `:toggle search.smart-case`。 |
+| `:get-option`, `:get` | 获取配置选项的当前值。 |
+| `:sort` | 对选区中的范围进行排序。 |
+| `:reflow` | 将当前选中的行硬换行到指定宽度。 |
+| `:tree-sitter-subtree`, `:ts-subtree` | 显示覆盖主选区的最小子树，主要用于调试查询。 |
+| `:config-reload` | 刷新用户配置。 |
+| `:config-open` | 打开用户 config.toml 文件。 |
+| `:config-open-workspace` | 打开工作区 config.toml 文件。 |
+| `:log-open` | 打开 helix 日志文件。 |
+| `:insert-output` | 运行 shell 命令，在每个选区前插入输出。 |
+| `:append-output` | 运行 shell 命令，在每个选区后追加输出。 |
+| `:pipe`, `:\|` | 将每个选区传递给 shell 命令。 |
+| `:pipe-to` | 将每个选区传递给 shell 命令，忽略输出。 |
+| `:run-shell-command`, `:sh`, `:!` | 运行 shell 命令。 |
+| `:reset-diff-change`, `:diffget`, `:diffg` | 重置光标位置的差异更改。 |
+| `:clear-register` | 清除指定寄存器。若未提供参数，则清除所有寄存器。 |
+| `:set-register` | 设置指定寄存器的内容。 |
+| `:redraw` | 清除并重新渲染整个 UI。 |
+| `:move`, `:mv` | 将当前缓冲区及其对应文件移动到不同路径。 |
+| `:move!`, `:mv!` | 将当前缓冲区及其对应文件移动到不同路径，创建必要的子目录。 |
+| `:yank-diagnostic` | 将主光标下的诊断信息复制到寄存器，默认复制到剪贴板。 |
+| `:read`, `:r` | 将文件加载到缓冲区。 |
+| `:echo` | 将给定参数打印到状态行。 |
+| `:noop` | 无操作。 |
+| `:workspace-trust` | 允许当前工作区使用语言服务器和本地配置。 |
+| `:workspace-untrust` | 撤销当前工作区的信任授权或排除设置。 |
+| `:workspace-exclude` | 将当前工作区标记为不再提示。不再提示信任。 |
