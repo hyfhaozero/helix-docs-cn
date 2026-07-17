@@ -1,4 +1,4 @@
-# Configuration
+# 配置
 
 要覆盖全局配置参数，请在配置目录中创建一个 `config.toml` 文件：
 

@@ -1,4 +1,4 @@
-## Editor
+## 编辑器
 
 - [`[editor]` Section](#editor-section)
 - [`[editor.clipboard-provider]` Section](#editorclipboard-provider-section)
