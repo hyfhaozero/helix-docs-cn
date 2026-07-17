@@ -1,5 +1,3 @@
-# Guides
+# 指南
 
-This section contains guides for adding new languages to Helix: language and
-grammar configuration, and the tree-sitter query files that drive highlighting,
-power indentation, textobjects, symbol tags, and other features.
+本节包含向 Helix 添加新语言的指南：语言和语法配置，以及用于驱动高亮显示、智能缩进、文本对象、符号标签和其他功能的 tree-sitter 查询文件。

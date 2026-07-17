@@ -1,23 +1,14 @@
-## Adding Locals Queries
+## 添加局部变量查询
 
-`locals.scm` queries teach Helix about variable scopes and definitions so that
-local variables can be highlighted distinctly from global ones. When a
-`@local.reference` identifier is resolved to a `@local.definition`, it inherits
-the highlight class of that definition rather than the class assigned by
-`highlights.scm`.
+`locals.scm` 查询让 Helix 了解变量作用域和定义，从而可以将局部变量与全局变量区分高亮显示。当 `@local.reference` 标识符被解析为 `@local.definition` 时，它会继承该定义的高亮类别，而不是由 `highlights.scm` 分配的类别。
 
-Query files should be placed in `runtime/queries/{language}/locals.scm` when
-contributing to Helix. Like other query files, `locals.scm` may reuse another
-language's with `; inherits: <lang>` on the first line. Locals are resolved in
-their own pass with their own precedence, independently of `highlights.scm`.
+在为 Helix 贡献代码时，查询文件应放置在 `runtime/queries/{language}/locals.scm` 中。与其他查询文件一样，`locals.scm` 可以在第一行使用 `; inherits: <lang>` 来复用其他语言的查询。局部变量解析在其自己的过程中进行，具有自己的优先级，独立于 `highlights.scm`。
 
-## Captures
+## 捕获
 
 ### `@local.scope`
 
-Marks a node as a scope boundary. Definitions are only visible to references
-that appear inside the same scope or a nested one. Typical scope nodes are
-function bodies and blocks.
+将节点标记为作用域边界。定义仅对出现在同一作用域或嵌套作用域内的引用可见。典型的作用域节点是函数体和代码块。
 
 ```scm
 [

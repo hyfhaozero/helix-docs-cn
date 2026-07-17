@@ -1,18 +1,17 @@
 # Helix
 
 <div class="version-tiles">
-  <a class="version-tile" href="/helix-docs-cn/">
+  <a class="version-tile" href="/helix-docs-cn/stable">
     <strong>稳定版(Stable)</strong>
     <span class="version-tile-sub">最新正式版(tagged release)的文档</span>
   </a>
-  <a class="version-tile" href="/helix-docs-cn/master/">
-    <strong>最新版(Master)</strong>
+  <a class="version-tile" href="/helix-docs-cn/">
+    <strong>->最新版(Master)</strong>
     <span class="version-tile-sub">基于 <code>master</code> 分支构建的最新开发版文档.</span>
   </a>
 </div>
 
-注: 本文档为中文翻译文档，可能包含错误或不完整的内容。请在使用前检查并确认，目前只翻译了稳定版文档.
-稳定版文档翻译时间: 2026-07-xx
+注: 本文档为中文翻译文档，可能包含错误或不完整的内容。请在使用前检查并确认，目前只翻译了master分支(2026-07-14)文档.
 [文档翻译仓库](https://github.com/hyfhaozero/helix-docs-cn)
 [主站翻译](https://hyfhaozero.github.io/website-cn)
 
