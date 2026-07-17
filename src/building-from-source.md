@@ -1,13 +1,13 @@
 ## 从源码构建
 
-- [Configuring Helix's runtime files](#configuring-helixs-runtime-files)
-  - [Linux and macOS](#linux-and-macos)
+- [配置 Helix 运行时文件](#configuring-helixs-runtime-files)
+  - [Linux 和 macOS](#linux-and-macos)
   - [Windows](#windows)
-  - [Multiple runtime directories](#multiple-runtime-directories)
-  - [Note to packagers](#note-to-packagers)
-- [Validating the installation](#validating-the-installation)
-- [Configure the desktop shortcut](#configure-the-desktop-shortcut)
-- [Building the Debian package](#building-the-debian-package)
+  - [多个运行时目录](#multiple-runtime-directories)
+  - [打包说明](#note-to-packagers)
+- [验证安装](#validating-the-installation)
+- [配置桌面快捷方式](#configure-the-desktop-shortcut)
+- [构建 Debian 包](#building-the-debian-package)
 
 前置要求:
 
@@ -53,9 +53,9 @@ RUSTFLAGS="-C target-feature=-crt-static"
 
 > 💡 如果你只想构建部分语法解析库，可以查看 [`use-grammars`](./languages.md#choosing-grammars)
 
-### 配置 Helix 的运行时文件
+### 配置 Helix 的运行时文件 {#configuring-helixs-runtime-files}
 
-#### Linux / macOS
+#### Linux / macOS {#linux-and-macos}
 
 **runtime** 目录位于 Helix 源码目录的下一级，因此你可以导出 `HELIX_RUNTIME` 环境变量指向该目录，并将其添加到 `~/.bashrc` 或等效的配置文件中：
 
@@ -69,7 +69,7 @@ export HELIX_RUNTIME=~/src/helix/runtime
 ln -Tsf $PWD/runtime ~/.config/helix/runtime
 ```
 
-#### Windows
+#### Windows {#windows}
 
 可以通过 Windows 设置（搜索“编辑账户的环境变量”）将 `HELIX_RUNTIME` 环境变量指向 runtime 文件，或者在 Cmd 中使用 `setx` 命令：
 
@@ -88,7 +88,7 @@ setx HELIX_RUNTIME "%userprofile%\src\helix\runtime"
 
 > 💡 在 Windows 上创建符号链接需要在 PowerShell 或 Cmd 中运行，且需要管理员权限。
 
-#### 多个运行时目录
+#### 多个运行时目录 {#multiple-runtime-directories}
 
 当 Helix 发现多个运行时目录时，它会按以下顺序搜索文件：
 
@@ -100,7 +100,7 @@ setx HELIX_RUNTIME "%userprofile%\src\helix\runtime"
 
 > 💡 如果多个运行时目录有相同文件名的文件，Helix 会优先使用第一个发现的文件。
 
-#### 包管理器的注意事项
+#### 包管理器的注意事项 {#note-to-packagers}
 
 如果你要为最终用户打包 Helix，为了提供良好的开箱即用体验，你应该在构建时（在调用 `cargo build` 之前）将 `HELIX_DEFAULT_RUNTIME` 环境变量设置为安装后存放最终 runtime 文件的目录。例如，假设你要将 runtime 打包到 `/usr/lib/helix/runtime`，构建脚本大致可按以下步骤执行：
 
@@ -111,7 +111,7 @@ setx HELIX_RUNTIME "%userprofile%\src\helix\runtime"
 
 这样，如果用户在 `~/.config/helix` 或 `HELIX_RUNTIME` 中没有自定义 runtime，生成的 `hx` 二进制文件将始终在 `/usr/lib/helix/runtime` 中查找其 runtime 目录。
 
-### 验证安装
+### 验证安装 {#validating-the-installation}
 
 为确保一切按预期设置，你应当进行 Helix 健康检查.
 检查:
@@ -122,7 +122,7 @@ hx --health
 
 > 💡 有关健康检查结果的更多信息，请参阅 [健康检查](https://github.com/helix-editor/helix/wiki/Healthcheck)。
 
-### 配置桌面快捷方式
+### 配置桌面快捷方式 {#configure-the-desktop-shortcut}
 
 如果你的桌面环境支持 [XDG desktop menu](https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html)，可以通过将提供的 `.desktop` 和图标文件复制到正确的文件夹，将 Helix 配置为在应用程序菜单中显示：
 
@@ -144,7 +144,7 @@ sed -i "s|Exec=hx %F|Exec=kitty hx %F|g" ~/.local/share/applications/Helix.deskt
 sed -i "s|Terminal=true|Terminal=false|g" ~/.local/share/applications/Helix.desktop
 ```
 
-### 构建 Debian 包
+### 构建 Debian 包 {#building-the-debian-package}
 
 如果发布页上提供的 `.deb` 文件使用的 `libc` 版本高于你的 Debian、Ubuntu 或 Mint 系统所使用的版本，你可以从源码构建软件包以匹配系统的依赖关系。
 
