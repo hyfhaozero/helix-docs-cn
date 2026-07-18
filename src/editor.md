@@ -1,90 +1,89 @@
 ## 编辑器
 
-- [`[editor]` Section](#editor-section)
-- [`[editor.clipboard-provider]` Section](#editorclipboard-provider-section)
-- [`[editor.statusline]` Section](#editorstatusline-section)
-- [`[editor.lsp]` Section](#editorlsp-section)
-- [`[editor.cursor-shape]` Section](#editorcursor-shape-section)
-- [`[editor.file-picker]` Section](#editorfile-picker-section)
-- [`[editor.file-explorer]` Section](#editorfile-explorer-section)
-- [`[editor.buffer-picker]` Section](#editorbuffer-picker-section)
-- [`[editor.auto-pairs]` Section](#editorauto-pairs-section)
-- [`[editor.auto-save]` Section](#editorauto-save-section)
-- [`[editor.search]` Section](#editorsearch-section)
-- [`[editor.whitespace]` Section](#editorwhitespace-section)
-- [`[editor.indent-guides]` Section](#editorindent-guides-section)
-- [`[editor.gutters]` Section](#editorgutters-section)
-  - [`[editor.gutters.line-numbers]` Section](#editorguttersline-numbers-section)
-  - [`[editor.gutters.diagnostics]` Section](#editorguttersdiagnostics-section)
-  - [`[editor.gutters.diff]` Section](#editorguttersdiff-section)
-  - [`[editor.gutters.spacer]` Section](#editorguttersspacer-section)
-  - [`[editor.gutters.code-action-hint]` Section](#editorgutterscode-action-hint-section)
-- [`[editor.soft-wrap]` Section](#editorsoft-wrap-section)
-- [`[editor.smart-tab]` Section](#editorsmart-tab-section)
-- [`[editor.inline-diagnostics]` Section](#editorinline-diagnostics-section)
-- [`[editor.word-completion]` Section](#editorword-completion-section)
-- [`[editor.workspace-trust]` Section](#editorworkspace-trust-section)
+- [`[editor]` 部分](#editor-section)
+- [`[editor.clipboard-provider]` 部分](#editorclipboard-provider-section)
+- [`[editor.statusline]` 部分](#editorstatusline-section)
+- [`[editor.lsp]` 部分](#editorlsp-section)
+- [`[editor.cursor-shape]` 部分](#editorcursor-shape-section)
+- [`[editor.file-picker]` 部分](#editorfile-picker-section)
+- [`[editor.file-explorer]` 部分](#editorfile-explorer-section)
+- [`[editor.buffer-picker]` 部分](#editorbuffer-picker-section)
+- [`[editor.auto-pairs]` 部分](#editorauto-pairs-section)
+- [`[editor.auto-save]` 部分](#editorauto-save-section)
+- [`[editor.search]` 部分](#editorsearch-section)
+- [`[editor.whitespace]` 部分](#editorwhitespace-section)
+- [`[editor.indent-guides]` 部分](#editorindent-guides-section)
+- [`[editor.gutters]` 部分](#editorgutters-section)
+  - [`[editor.gutters.line-numbers]` 部分](#editorguttersline-numbers-section)
+  - [`[editor.gutters.diagnostics]` 部分](#editorguttersdiagnostics-section)
+  - [`[editor.gutters.diff]` 部分](#editorguttersdiff-section)
+  - [`[editor.gutters.spacer]` 部分](#editorguttersspacer-section)
+  - [`[editor.gutters.code-action-hint]` 部分](#editorgutterscode-action-hint-section)
+- [`[editor.soft-wrap]` 部分](#editorsoft-wrap-section)
+- [`[editor.smart-tab]` 部分](#editorsmart-tab-section)
+- [`[editor.inline-diagnostics]` 部分](#editorinline-diagnostics-section)
+- [`[editor.word-completion]` 部分](#editorword-completion-section)
+- [`[editor.workspace-trust]` 部分](#editorworkspace-trust-section)
 
-### `[editor]` Section
+### `[editor]` 部分
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-| `scrolloff` | Number of lines of padding around the edge of the screen when scrolling | `5` |
-| `mouse` | Enable mouse mode | `true` |
-| `mouse-yank-register` | Which register to use for mouse yanks. | `*` |
-| `middle-click-paste` | Middle click paste support | `true` |
-| `default-yank-register` | Default register used for yank/paste | `'"'` |
-| `scroll-lines` | Number of lines to scroll per scroll wheel step | `3` |
-| `shell` | Shell to use when running external commands | Unix: `["sh", "-c"]`<br/>Windows: `["cmd", "/C"]` |
-| `line-number` | Line number display: `absolute` simply shows each line's number, while `relative` shows the distance from the current line. When unfocused or in insert mode, `relative` will still show absolute line numbers | `"absolute"` |
-| `cursorline` | Highlight all lines with a cursor | `false` |
-| `cursorcolumn` | Highlight all columns with a cursor | `false` |
-| `continue-comments` | if helix should automatically add a line comment token if you create a new line inside a comment. | `true` |
-| `gutters` | Gutters to display: Available are `diagnostics` and `diff` and `line-numbers` and `spacer` and `code-action-hint`, note that `diagnostics` also includes other features like breakpoints, 1-width padding will be inserted if gutters is non-empty | `["diagnostics", "spacer", "line-numbers", "spacer", "diff"]` |
-| `auto-completion` | Enable automatic pop up of auto-completion | `true` |
-| `path-completion` | Enable filepath completion. Show files and directories if an existing path at the cursor was recognized, either absolute or relative to the current opened document or current working directory (if the buffer is not yet saved). Defaults to true. | `true` |
-| `auto-format` | Enable automatic formatting on save[^3] | `true` |
-| `idle-timeout` | Time in milliseconds since last keypress before idle timers trigger. | `250` |
-| `completion-timeout` | Time in milliseconds after typing a word character before completions are shown, set to 5 for instant.  | `250` |
-| `preview-completion-insert` | Whether to apply completion item instantly when selected | `true` |
-| `completion-trigger-len` | The min-length of word under cursor to trigger autocompletion | `2` |
-| `completion-replace` | Whether to make completions always replace the entire word and not just the part before the cursor | `false` |
-| `auto-info` | Whether to display info boxes | `true` |
-| `true-color` | Whether to override automatic detection of terminal truecolor support in the event of a false negative | `false` |
-| `undercurl` | Whether to override automatic detection of terminal undercurl support in the event of a false negative | `false` |
-| `rulers` | List of column positions at which to display the rulers. Can be overridden by language specific `rulers` in `languages.toml` file | `[]` |
-| `bufferline` | Renders a line at the top of the editor displaying open buffers. Can be `always`, `never` or `multiple` (only shown if more than one buffer is in use) | `"never"` |
-| `color-modes` | Whether to color the mode indicator with different colors depending on the mode itself | `false` |
-| `text-width` | Maximum line length. Used for the `:reflow` command and soft-wrapping if `soft-wrap.wrap-at-text-width` is set | `80` |
-| `workspace-lsp-roots` | Directories relative to the workspace root that are treated as LSP roots. Should only be set in `.helix/config.toml` | `[]` |
-| `default-line-ending` | The line ending to use for new documents. Can be `native`, `lf`, `crlf`, `ff`, `cr` or `nel`. `native` uses the platform's native line ending (`crlf` on Windows, otherwise `lf`). | `"native"` |
-| `insert-final-newline` | Whether to automatically insert a trailing line-ending on write if missing | `true` |
-| `atomic-save` | Whether to use atomic operations to write documents to disk. This prevents data loss if the editor is interrupted while writing the file, but may confuse some file watching/hot reloading programs. | `true` |
-| `trim-final-newlines` | Whether to automatically remove line-endings after the final one on write | `false` |
-| `trim-trailing-whitespace` | Whether to automatically remove whitespace preceding line endings on write | `false` |
-| `popup-border` | Draw border around `popup`, `menu`, `all`, or `none` | `"none"` |
-| `indent-heuristic` | How the indentation for a newly inserted line is computed: `simple` just copies the indentation level from the previous line, `tree-sitter` computes the indentation based on the syntax tree and `hybrid` combines both approaches. If the chosen heuristic is not available, a different one will be used as a fallback (the fallback order being `hybrid` -> `tree-sitter` -> `simple`). | `"hybrid"` |
-| `jump-label-alphabet` | The characters that are used to generate two character jump labels. Characters at the start of the alphabet are used first. | `"abcdefghijklmnopqrstuvwxyz"` |
-| `end-of-line-diagnostics` | Minimum severity of diagnostics to render at the end of the line. Set to `disable` to disable entirely. Refer to the setting about `inline-diagnostics` for more details | `"hint"` |
-| `clipboard-provider` | Which API to use for clipboard interaction. One of `pasteboard` (MacOS), `wayland`, `x-clip`, `x-sel`, `win32-yank`, `termux`, `tmux`, `windows`, `termcode`, `none`, or a custom command set. | Platform and environment specific. |
-| `editor-config` | Whether to read settings from [EditorConfig](https://editorconfig.org) files | `true` |
-| `rainbow-brackets` | Whether to render rainbow colors for matching brackets. Requires tree-sitter `rainbows.scm` queries for the language. | `false` |
-| `kitty-keyboard-protocol` | Whether to enable Kitty Keyboard Protocol. Can be `enabled`, `disabled` or `auto` | `"auto"` |
+| `scrolloff` | 滚动时屏幕边缘的填充行数 | `5` |
+| `mouse` | 启用鼠标模式 | `true` |
+| `mouse-yank-register` | 鼠标复制使用的寄存器 | `*` |
+| `middle-click-paste` | 支持鼠标中键粘贴 | `true` |
+| `default-yank-register` | 复制/粘贴使用的默认寄存器 | `'"'` |
+| `scroll-lines` | 每次滚动滚轮步进滚动的行数 | `3` |
+| `shell` | 运行外部命令时使用的 Shell | Unix: `["sh", "-c"]`<br/>Windows: `["cmd", "/C"]` |
+| `line-number` | 行号显示：`absolute` 简单显示每行编号，`relative` 显示与当前行的距离。未聚焦或插入模式下，`relative` 仍显示绝对行号 | `"absolute"` |
+| `cursorline` | 高亮所有有光标的行 | `false` |
+| `cursorcolumn` | 高亮所有有光标的列 | `false` |
+| `continue-comments` | 在注释内创建新行时 Helix 是否自动添加行注释标记 | `true` |
+| `gutters` | 要显示的行号区域：可用选项有 `diagnostics`、`diff`、`line-numbers`、`spacer` 和 `code-action-hint`，注意 `diagnostics` 还包括断点等其他功能，若行号区域非空则插入 1 像素宽度填充 | `["diagnostics", "spacer", "line-numbers", "spacer", "diff"]` |
+| `auto-completion` | 启用自动补全弹窗 | `true` |
+| `path-completion` | 启用文件路径补全。若光标处识别出已有路径（相对于当前打开的文档或当前工作目录的绝对或相对路径），则显示文件和目录。默认为 true。 | `true` |
+| `auto-format` | 保存时启用自动格式化[^3] | `true` |
+| `idle-timeout` | 上次按键后触发空闲计时器的毫秒数 | `250` |
+| `completion-timeout` | 输入单词字符后显示补全的毫秒数，设为 5 表示即时 | `250` |
+| `preview-completion-insert` | 选中补全项时是否立即应用 | `true` |
+| `completion-trigger-len` | 触发自动补全的光标下单词最小长度 | `2` |
+| `completion-replace` | 是否使补全始终替换整个单词而不仅仅是光标前的部分 | `false` |
+| `auto-info` | 是否显示信息框 | `true` |
+| `true-color` | 在误报情况下是否覆盖终端真彩色支持的自动检测 | `false` |
+| `undercurl` | 在误报情况下是否覆盖终端下卷曲波浪线支持的自动检测 | `false` |
+| `rulers` | 显示标尺的列位置列表。可在 `languages.toml` 文件中按语言单独覆盖 `rulers` | `[]` |
+| `bufferline` | 在编辑器顶部渲染一行显示打开的缓冲区。可以是 `always`、`never` 或 `multiple`（仅当使用多个缓冲区时显示） | `"never"` |
+| `color-modes` | 是否根据模式本身用不同颜色着色模式指示器 | `false` |
+| `text-width` | 最大行长度。用于 `:reflow` 命令和软换行（若设置了 `soft-wrap.wrap-at-text-width`） | `80` |
+| `workspace-lsp-roots` | 相对于工作区根目录被视为 LSP 根目录的目录。应仅在 `.helix/config.toml` 中设置 | `[]` |
+| `default-line-ending` | 新文档使用的换行符。可以是 `native`、`lf`、`crlf`、`ff`、`cr` 或 `nel`。`native` 使用平台的原生换行符（Windows 上为 `crlf`，否则为 `lf`）。 | `"native"` |
+| `insert-final-newline` | 写入时若缺少尾随换行符是否自动插入 | `true` |
+| `atomic-save` | 是否使用原子操作将文档写入磁盘。这可以防止在写入文件时编辑器被中断而导致数据丢失，但可能会混淆某些文件监视/热重载程序。 | `true` |
+| `trim-final-newlines` | 写入时是否自动删除最后一个换行符之后的换行符 | `false` |
+| `trim-trailing-whitespace` | 写入时是否自动删除行尾前的空白字符 | `false` |
+| `popup-border` | 为 `popup`、`menu`、`all` 或 `none` 绘制边框 | `"none"` |
+| `indent-heuristic` | 计算新插入行缩进的方式：`simple` 仅复制前一行的缩进级别，`tree-sitter` 基于语法树计算缩进，`hybrid` 结合两种方法。若所选启发式方法不可用，将使用其他方法作为备选（备选顺序为 `hybrid` -> `tree-sitter` -> `simple`）。 | `"hybrid"` |
+| `jump-label-alphabet` | 用于生成双字符跳转标签的字符。优先使用字母表开头的字符。 | `"abcdefghijklmnopqrstuvwxyz"` |
+| `end-of-line-diagnostics` | 行尾渲染诊断的最低严重级别。设为 `disable` 完全禁用。更多详情请参阅 `inline-diagnostics` 设置 | `"hint"` |
+| `clipboard-provider` | 用于剪贴板交互的 API。可以是 `pasteboard`（MacOS）、`wayland`、`x-clip`、`x-sel`、`win32-yank`、`termux`、`tmux`、`windows`、`termcode`、`none` 或自定义命令集。 | 平台和环境特定。 |
+| `editor-config` | 是否从 [EditorConfig](https://editorconfig.org) 文件读取设置 | `true` |
+| `rainbow-brackets` | 是否为匹配括号渲染彩虹颜色。需要语言的 tree-sitter `rainbows.scm` 查询。 | `false` |
+| `kitty-keyboard-protocol` | 是否启用 Kitty 键盘协议。可以是 `enabled`、`disabled` 或 `auto` | `"auto"` |
 
-[^3]: In most cases, you also need to enable the `auto-format` setting under `languages.toml`. You can find the reasoning [here](https://github.com/helix-editor/helix/discussions/9043#discussioncomment-7811497).
+[^3]: 在大多数情况下，你还需在 `languages.toml` 中启用 `auto-format` 设置。原因请参见[此处](https://github.com/helix-editor/helix/discussions/9043#discussioncomment-7811497)。
 
-### `[editor.clipboard-provider]` Section
+### `[editor.clipboard-provider]` 部分
 
-Helix can be configured either to use a builtin clipboard configuration or to use
-a provided command.
+Helix 可配置为使用内置剪贴板配置或使用提供的命令。
 
-For instance, setting it to use OSC 52 termcodes, the configuration would be:
+例如，将其设置为使用 OSC 52 终端代码，配置如下：
 ```toml
 [editor]
 clipboard-provider = "termcode"
 ```
 
-Alternatively, Helix can be configured to use arbitrary commands for clipboard integration:
+或者，Helix 也可以配置为使用任意命令进行剪贴板集成：
 
 ```toml
 [editor.clipboard-provider.custom]
@@ -94,17 +93,17 @@ primary-yank = { command = "cat",  args = ["test-primary.txt"] } # optional
 primary-paste = { command = "tee",  args = ["test-primary.txt"] } # optional
 ```
 
-For custom commands the contents of the yank/paste is communicated over stdin/stdout.
+对于自定义命令，复制/粘贴的内容通过标准输入/标准输出进行通信。
 
-### `[editor.statusline]` Section
+### `[editor.statusline]` 部分
 
-Allows configuring the statusline at the bottom of the editor.
+允许配置编辑器底部的状态栏。
 
-The configuration distinguishes between three areas of the status line:
+该配置区分状态栏的三个区域：
 
-`[ ... ... LEFT ... ... | ... ... ... CENTER ... ... ... | ... ... RIGHT ... ... ]`
+`[ ... ... 左 ... ... | ... ... ... 中 ... ... ... | ... ... 右 ... ... ]`
 
-Statusline elements can be defined as follows:
+状态栏元素可以按如下方式定义：
 
 ```toml
 [editor.statusline]
@@ -118,168 +117,164 @@ mode.select = "SELECT"
 diagnostics = ["warning", "error"]
 workspace-diagnostics = ["warning", "error"]
 ```
-The `[editor.statusline]` key takes the following sub-keys:
+### `[editor.statusline]` 部分（续）
 
-| Key           | Description | Default |
+`[editor.statusline]` 键接受以下子键：
+
+| 键名           | 描述 | 默认值 |
 | ---           | ---         | ---     |
-| `left`        | A list of elements aligned to the left of the statusline | `["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]` |
-| `center`      | A list of elements aligned to the middle of the statusline | `[]` |
-| `right`       | A list of elements aligned to the right of the statusline | `["diagnostics", "selections", "register", "position", "file-encoding"]` |
-| `separator`   | The character used to separate elements in the statusline | `"│"` |
-| `mode.normal` | The text shown in the `mode` element for normal mode | `"NOR"` |
-| `mode.insert` | The text shown in the `mode` element for insert mode | `"INS"` |
-| `mode.select` | The text shown in the `mode` element for select mode | `"SEL"` |
-| `diagnostics` | A list of severities which are displayed for the current buffer | `["warning", "error"]` |
-| `workspace-diagnostics` | A list of severities which are displayed for the workspace | `["warning", "error"]` |
+| `left`        | 左对齐的状态栏元素列表 | `["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]` |
+| `center`      | 居中的状态栏元素列表 | `[]` |
+| `right`       | 右对齐的状态栏元素列表 | `["diagnostics", "selections", "register", "position", "file-encoding"]` |
+| `separator`   | 用于分隔状态栏元素的字符 | `"│"` |
+| `mode.normal` | 普通模式下 `mode` 元素显示的文本 | `"NOR"` |
+| `mode.insert` | 插入模式下 `mode` 元素显示的文本 | `"INS"` |
+| `mode.select` | 选择模式下 `mode` 元素显示的文本 | `"SEL"` |
+| `diagnostics` | 当前缓冲区显示的诊断严重级别列表 | `["warning", "error"]` |
+| `workspace-diagnostics` | 工作区显示的诊断严重级别列表 | `["warning", "error"]` |
 
-The following statusline elements can be configured:
+可配置的状态栏元素：
 
-| Key    | Description |
+| 键名    | 描述 |
 | ------ | ----------- |
-| `mode` | The current editor mode (`mode.normal`/`mode.insert`/`mode.select`) |
-| `spinner` | A progress spinner indicating LSP activity |
-| `file-name` | The path/name of the opened file |
-| `file-absolute-path` | The absolute path/name of the opened file |
-| `file-base-name` | The basename of the opened file |
-| `current-working-directory` | The current working directory  |
-| `file-modification-indicator` | The indicator to show whether the file is modified (a `[+]` appears when there are unsaved changes) |
-| `file-encoding` | The encoding of the opened file if it differs from UTF-8 |
-| `file-line-ending` | The file line endings (CRLF or LF) |
-| `file-indent-style` | The file indentation style |
-| `read-only-indicator` | An indicator that shows `[readonly]` when a file cannot be written |
-| `total-line-numbers` | The total line numbers of the opened file |
-| `file-type` | The type of the opened file |
-| `diagnostics` | The number of warnings and/or errors |
-| `workspace-diagnostics` | The number of warnings and/or errors on workspace |
-| `selections` | The primary selection index out of the number of active selections |
-| `primary-selection-length` | The number of characters currently in primary selection |
-| `position` | The cursor position |
-| `position-percentage` | The cursor position as a percentage of the total number of lines |
-| `separator` | The string defined in `editor.statusline.separator` (defaults to `"│"`) |
-| `spacer` | Inserts a space between elements (multiple/contiguous spacers may be specified) |
-| `version-control` | The current branch name or detached commit hash of the opened workspace |
-| `register` | The current selected register |
-| `code-action-hint` | Indicator for when code actions are available |
+| `mode` | 当前编辑器模式（`mode.normal`/`mode.insert`/`mode.select`） |
+| `spinner` | 表示 LSP 活动状态的进度旋转器 |
+| `file-name` | 打开文件的路径/名称 |
+| `file-absolute-path` | 打开文件的绝对路径/名称 |
+| `file-base-name` | 打开文件的基本名称 |
+| `current-working-directory` | 当前工作目录 |
+| `file-modification-indicator` | 显示文件是否已修改的指示器（有未保存更改时显示 `[+]`） |
+| `file-encoding` | 打开文件的编码（若非 UTF-8） |
+| `file-line-ending` | 文件的换行符（CRLF 或 LF） |
+| `file-indent-style` | 文件的缩进样式 |
+| `read-only-indicator` | 当文件无法写入时显示 `[readonly]` 的指示器 |
+| `total-line-numbers` | 打开文件的总行数 |
+| `file-type` | 打开文件的类型 |
+| `diagnostics` | 警告和/或错误的数量 |
+| `workspace-diagnostics` | 工作区中警告和/或错误的数量 |
+| `selections` | 当前活动选区中的主选区索引 |
+| `primary-selection-length` | 当前主选区中的字符数 |
+| `position` | 光标位置 |
+| `position-percentage` | 光标位置占总行数的百分比 |
+| `separator` | `editor.statusline.separator` 中定义的字符串（默认为 `"│"`） |
+| `spacer` | 在元素之间插入空格（可指定多个/连续的空格） |
+| `version-control` | 打开的工作区的当前分支名称或分离的提交哈希 |
+| `register` | 当前选中的寄存器 |
+| `code-action-hint` | 有可用代码操作时的指示器 |
 
-### `[editor.lsp]` Section
+### `[editor.lsp]` 部分
 
-| Key                   | Description                                                 | Default |
+| 键名                   | 描述                                                 | 默认值 |
 | ---                   | -----------                                                 | ------- |
-| `enable`              | Enables LSP integration. Setting to false will completely disable language servers regardless of language settings.| `true` |
-| `display-messages`    | Display LSP `window/showMessage` messages below statusline[^1] | `true` |
-| `display-progress-messages` | Display LSP progress messages below statusline[^1]    | `false` |
-| `auto-signature-help` | Enable automatic popup of signature help (parameter hints)  | `true`  |
-| `auto-document-highlight` | Automatically highlight symbol references at the cursor | `false` |
-| `display-inlay-hints` | Display inlay hints[^2]                                     | `false` |
-| `inlay-hints-length-limit` | Maximum displayed length (non-zero number) of inlay hints | Unset by default  |
-| `display-color-swatches` | Show color swatches next to colors | `true` |
-| `display-signature-help-docs` | Display docs under signature help popup             | `true`  |
-| `snippets`      | Enables snippet completions. Requires a server restart (`:lsp-restart`) to take effect after `:config-reload`/`:set`. | `true`  |
-| `goto-reference-include-declaration` | Include declaration in the goto references popup. | `true`  |
+| `enable`              | 启用 LSP 集成。设为 `false` 将完全禁用语言服务器，无论语言设置如何。 | `true` |
+| `display-messages`    | 在状态栏下方显示 LSP `window/showMessage` 消息[^1] | `true` |
+| `display-progress-messages` | 在状态栏下方显示 LSP 进度消息[^1]    | `false` |
+| `auto-signature-help` | 启用签名帮助（参数提示）的自动弹出 | `true`  |
+| `auto-document-highlight` | 自动高亮光标处的符号引用 | `false` |
+| `display-inlay-hints` | 显示内联提示[^2] | `false` |
+| `inlay-hints-length-limit` | 内联提示的最大显示长度（非零数字） | 默认未设置 |
+| `display-color-swatches` | 在颜色旁显示色板 | `true` |
+| `display-signature-help-docs` | 在签名帮助弹出窗口下显示文档 | `true`  |
+| `snippets`      | 启用代码片段补全。需要在 `:config-reload`/`:set` 后重启服务器（`:lsp-restart`）才能生效。 | `true`  |
+| `goto-reference-include-declaration` | 在转到引用弹出窗口中包含声明。 | `true`  |
 
-[^1]: By default, a progress spinner is shown in the statusline beside the file path.
+[^1]: 默认情况下，状态栏中文件路径旁会显示一个进度旋转器。
 
-[^2]: You may also have to activate them in the language server config for them to appear, not just in Helix. Inlay hints in Helix are still being improved on and may be a little bit laggy/janky under some circumstances. Please report any bugs you see so we can fix them!
+[^2]: 你可能还需要在语言服务器配置中激活它们才能显示，而不仅仅是在 Helix 中。Helix 中的内联提示仍在改进中，在某些情况下可能会略显迟缓或不稳定。如果你发现任何错误，请报告以便我们修复！
 
-### `[editor.cursor-shape]` Section
+### `[editor.cursor-shape]` 部分
 
-Defines the shape of cursor in each mode.
-Valid values for these options are `block`, `bar`, `underline`, or `hidden`.
+定义每种模式下光标的形状。
+这些选项的有效值为 `block`、`bar`、`underline` 或 `hidden`。
 
-> 💡 Due to limitations of the terminal environment, only the primary cursor can
-> change shape.
+> 💡 由于终端环境的限制，只有主光标可以改变形状。
 
-| Key      | Description                                | Default   |
+| 键名      | 描述                                | 默认值   |
 | ---      | -----------                                | -------   |
-| `normal` | Cursor shape in [normal mode][normal mode] | `"block"` |
-| `insert` | Cursor shape in [insert mode][insert mode] | `"block"` |
-| `select` | Cursor shape in [select mode][select mode] | `"block"` |
+| `normal` | [普通模式][normal mode]下的光标形状 | `"block"` |
+| `insert` | [插入模式][insert mode]下的光标形状 | `"block"` |
+| `select` | [选择模式][select mode]下的光标形状 | `"block"` |
 
 [normal mode]: ./keymap.md#normal-mode
 [insert mode]: ./keymap.md#insert-mode
 [select mode]: ./keymap.md#select--extend-mode
 
-### `[editor.file-picker]` Section
+### `[editor.file-picker]` 部分
 
-Set options for file picker and global search. Ignoring a file means it is
-not visible in the Helix file picker and global search.
+设置文件选择器和全局搜索的选项。忽略文件意味着它在 Helix 文件选择器和全局搜索中不可见。
 
-All git related options are only enabled in a git repository.
+所有与 git 相关的选项仅在 git 仓库中启用。
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-|`hidden` | Enables ignoring hidden files | `true`
-|`follow-symlinks` | Follow symlinks instead of ignoring them | `true`
-|`deduplicate-links` | Ignore symlinks that point at files already shown in the picker | `true`
-|`parents` | Enables reading ignore files from parent directories | `true`
-|`ignore` | Enables reading `.ignore` files | `true`
-|`git-ignore` | Enables reading `.gitignore` files | `true`
-|`git-global` | Enables reading global `.gitignore`, whose path is specified in git's config: `core.excludesfile` option | `true`
-|`git-exclude` | Enables reading `.git/info/exclude` files | `true`
-|`max-depth` | Set with an integer value for maximum depth to recurse | Unset by default
+| `hidden` | 启用忽略隐藏文件 | `true` |
+| `follow-symlinks` | 跟随符号链接而非忽略它们 | `true` |
+| `deduplicate-links` | 忽略指向已显示在选择器中的文件的符号链接 | `true` |
+| `parents` | 启用从父目录读取忽略文件 | `true` |
+| `ignore` | 启用读取 `.ignore` 文件 | `true` |
+| `git-ignore` | 启用读取 `.gitignore` 文件 | `true` |
+| `git-global` | 启用读取全局 `.gitignore`，其路径在 git 配置的 `core.excludesfile` 选项中指定 | `true` |
+| `git-exclude` | 启用读取 `.git/info/exclude` 文件 | `true` |
+| `max-depth` | 设置一个整数值作为递归的最大深度 | 默认未设置 |
 
-Ignore files can be placed locally as `.ignore` or put in your home directory as `~/.ignore`. They support the usual ignore and negative ignore (unignore) rules used in `.gitignore` files.
+忽略文件可以本地放置为 `.ignore`，或放在主目录中作为 `~/.ignore`。它们支持 `.gitignore` 文件中常用的忽略和否定忽略（取消忽略）规则。
 
-Additionally, you can use Helix-specific ignore files by creating a local `.helix/ignore` file in the current workspace or a global `ignore` file located in your Helix config directory:
-- Linux and Mac: `~/.config/helix/ignore`
-- Windows: `%AppData%\helix\ignore`
+此外，你可以通过在当前工作区中创建本地 `.helix/ignore` 文件，或在 Helix 配置目录中创建全局 `ignore` 文件来使用 Helix 特定的忽略文件：
+- Linux 和 Mac：`~/.config/helix/ignore`
+- Windows：`%AppData%\helix\ignore`
 
-Example:
+示例：
 
 ```ini
-# unignore in file picker and global search
+# 在文件选择器和全局搜索中取消忽略
 !.github/
 !.gitignore
 !.gitattributes
 ```
 
-### `[editor.file-explorer]` Section
+### `[editor.file-explorer]` 部分
 
-In addition to the options for the file picker and global search, a similar set of options is presented to configure the file explorer separately. However, unlike the file picker, the defaults are set to avoid ignoring most files.
+除了文件选择器和全局搜索的选项外，还提供了一组类似的选项来单独配置文件浏览器。但与文件选择器不同，其默认值设置为避免忽略大多数文件。
 
-Note that the ignore files consulted by the file explorer when `ignore` is set to true are the same ones used by the file picker, including the aforementioned Helix-specific ignore files.
+请注意，当 `ignore` 设置为 `true` 时，文件浏览器参考的忽略文件与文件选择器使用的相同，包括前面提到的 Helix 特定忽略文件。
 
-
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-|`hidden` | Enables ignoring hidden files | `false`
-|`follow-symlinks` | Follow symlinks instead of ignoring them | `false`
-|`parents` | Enables reading ignore files from parent directories | `false`
-|`ignore` | Enables reading `.ignore` files | `false`
-|`git-ignore` | Enables reading `.gitignore` files | `false`
-|`git-global` | Enables reading global `.gitignore`, whose path is specified in git's config: `core.excludesfile` option | `false`
-|`git-exclude` | Enables reading `.git/info/exclude` files | `false`
-|`flatten-dirs` | Enables flattening single child directories | `true`
+| `hidden` | 启用忽略隐藏文件 | `false` |
+| `follow-symlinks` | 跟随符号链接而非忽略它们 | `false` |
+| `parents` | 启用从父目录读取忽略文件 | `false` |
+| `ignore` | 启用读取 `.ignore` 文件 | `false` |
+| `git-ignore` | 启用读取 `.gitignore` 文件 | `false` |
+| `git-global` | 启用读取全局 `.gitignore`，其路径在 git 配置的 `core.excludesfile` 选项中指定 | `false` |
+| `git-exclude` | 启用读取 `.git/info/exclude` 文件 | `false` |
+| `flatten-dirs` | 启用展平单子目录 | `true` |
 
-### `[editor.buffer-picker]` Section
+### `[editor.buffer-picker]` 部分
 
-Set options for buffer picker.
+设置缓冲区选择器的选项。
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-|`start-position` | Controls behavior for which buffer is initially selected | `current` |
+| `start-position` | 控制初始选中缓冲区的行为 | `current` |
 
-Example
+示例：
 
 ```toml
 [editor.buffer-picker]
 start-position = "previous"
 ```
 
-### `[editor.auto-pairs]` Section
+### `[editor.auto-pairs]` 部分
 
-Enables automatic insertion of pairs to parentheses, brackets, etc. Can be a
-simple boolean value, or a specific mapping of pairs of single characters.
+启用自动插入括号、方括号等成对符号。可以是一个简单的布尔值，也可以是单字符对的具体映射。
 
-To disable auto-pairs altogether, set `auto-pairs` to `false`:
-
+要完全禁用自动配对，请将 `auto-pairs` 设置为 `false`：
 ```toml
 [editor]
-auto-pairs = false # defaults to `true`
+auto-pairs = false # 默认值为 `true`
 ```
 
-The default pairs are <code>(){}[]''""``</code>, but these can be customized by
-setting `auto-pairs` to a TOML table:
+默认配对为 <code>(){}[]''""``</code>，但可以通过将 `auto-pairs` 设置为 TOML 表来定制：
 
 ```toml
 [editor.auto-pairs]
@@ -291,11 +286,9 @@ setting `auto-pairs` to a TOML table:
 '<' = '>'
 ```
 
-Additionally, this setting can be used in a language config. Unless
-the editor setting is `false`, this will override the editor config in
-documents with this language.
+此外，此设置可在语言配置中使用。除非编辑器设置为 `false`，否则在具有该语言的文档中会覆盖编辑器配置。
 
-Example `languages.toml` that adds `<>` and removes `''`
+以下 `languages.toml` 示例添加了 `<>` 并移除了 `''`：
 
 ```toml
 [[language]]
@@ -310,35 +303,35 @@ name = "rust"
 '<' = '>'
 ```
 
-### `[editor.auto-save]` Section
+### `[editor.auto-save]` 部分
 
-Control auto save behavior.
+控制自动保存行为。
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-| `focus-lost` | Enable automatic saving on the focus moving away from Helix. Requires [focus event support](https://github.com/helix-editor/helix/wiki/Terminal-Support) from your terminal | `false` |
-| `after-delay.enable` | Enable automatic saving after `auto-save.after-delay.timeout` milliseconds have passed since last edit. | `false` |
-| `after-delay.timeout` | Time in milliseconds since last edit before auto save timer triggers. | `3000` |
+| `focus-lost` | 当焦点离开 Helix 时启用自动保存。需要终端支持[焦点事件](https://github.com/helix-editor/helix/wiki/Terminal-Support) | `false` |
+| `after-delay.enable` | 在最后一次编辑后经过 `auto-save.after-delay.timeout` 毫秒后启用自动保存。 | `false` |
+| `after-delay.timeout` | 自动保存计时器触发前距离上次编辑的毫秒数。 | `3000` |
 
-### `[editor.search]` Section
+### `[editor.search]` 部分
 
-Search specific options.
+搜索特定选项。
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |--|--|---------|
-| `smart-case` | Enable smart case regex searching (case-insensitive unless pattern contains upper case characters) | `true` |
-| `wrap-around`| Whether the search should wrap after depleting the matches | `true` |
+| `smart-case` | 启用智能大小写正则搜索（除非模式包含大写字符，否则不区分大小写） | `true` |
+| `wrap-around`| 搜索匹配项用尽后是否应循环 | `true` |
 
-### `[editor.whitespace]` Section
+### `[editor.whitespace]` 部分
 
-Options for rendering whitespace with visible characters. Use `:set whitespace.render all` to temporarily enable visible whitespace.
+使用可见字符渲染空白字符的选项。使用 `:set whitespace.render all` 可临时启用可见空白字符。
 
-| Key | Description | Default |
+| 键名 | 描述 | 默认值 |
 |-----|-------------|---------|
-| `render` | Whether to render whitespace. May either be `all` or `none`, or a table with sub-keys `space`, `nbsp`, `nnbsp`, `tab`, and `newline` | `"none"` |
-| `characters` | Literal characters to use when rendering whitespace. Sub-keys may be any of `tab`, `space`, `nbsp`, `nnbsp`, `newline` or `tabpad` | See example below |
+| `render` | 是否渲染空白字符。可以是 `all` 或 `none`，也可以是包含子键 `space`、`nbsp`、`nnbsp`、`tab` 和 `newline` 的表 | `"none"` |
+| `characters` | 渲染空白字符时使用的字面字符。子键可以是 `tab`、`space`、`nbsp`、`nnbsp`、`newline` 或 `tabpad` | 参见下面的示例 |
 
-Example
+示例：
 
 ```toml
 [editor.whitespace]
@@ -357,124 +350,120 @@ nbsp = "⍽"
 nnbsp = "␣"
 tab = "→"
 newline = "⏎"
-tabpad = "·" # Tabs will look like "→···" (depending on tab width)
+tabpad = "·" # 制表符将显示为 "→···"（取决于制表符宽度）
 ```
 
-### `[editor.indent-guides]` Section
+### `[editor.indent-guides]` 部分
 
-Options for rendering vertical indent guides.
+用于渲染垂直缩进引导线的选项。
 
-| Key           | Description                                             | Default |
-| ---           | ---                                                     | ---     |
-| `render`      | Whether to render indent guides                         | `false` |
-| `character`   | Literal character to use for rendering the indent guide | `"│"`   |
-| `skip-levels` | Number of indent levels to skip                         | `0`     |
+| 键名          | 描述                             | 默认值 |
+| ---           | ---                             | ---    |
+| `render`      | 是否渲染缩进引导线               | `false`|
+| `character`   | 用于渲染缩进引导线的字面字符     | `"│"`  |
+| `skip-levels` | 要跳过的缩进级别数               | `0`    |
 
-Example:
+示例：
 
 ```toml
 [editor.indent-guides]
 render = true
-character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+character = "╎" # 一些效果不错的字符："▏"、"┆"、"┊"、"⸽"
 skip-levels = 1
 ```
 
-### `[editor.gutters]` Section
+### `[editor.gutters]` 部分
 
-For simplicity, `editor.gutters` accepts an array of gutter types, which will
-use default settings for all gutter components.
+为简化起见，`editor.gutters` 接受一个行号区域类型的数组，该数组将对所有行号区域组件使用默认设置。
 
 ```toml
 [editor]
 gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
 ```
 
-To customize the behavior of gutters, the `[editor.gutters]` section must
-be used. This section contains top level settings, as well as settings for
-specific gutter components as subsections.
+要自定义行号区域的行为，必须使用 `[editor.gutters]` 部分。该部分包含顶层设置以及特定行号区域组件作为子部分的设置。
 
-| Key      | Description                    | Default                                                       |
-| ---      | ---                            | ---                                                           |
-| `layout` | A vector of gutters to display | `["diagnostics", "spacer", "line-numbers", "spacer", "diff"]` |
+| 键名     | 描述                    | 默认值                                                           |
+| ---      | ---                    | ---                                                             |
+| `layout` | 要显示的行号区域向量    | `["diagnostics", "spacer", "line-numbers", "spacer", "diff"]`   |
 
-Example:
+示例：
 
 ```toml
 [editor.gutters]
 layout = ["diff", "diagnostics", "line-numbers", "spacer"]
 ```
 
-#### `[editor.gutters.line-numbers]` Section
+#### `[editor.gutters.line-numbers]` 部分
 
-Options for the line number gutter
+行号区域的选项
 
-| Key         | Description                             | Default |
-| ---         | ---                                     | ---     |
-| `min-width` | The minimum number of characters to use | `3`     |
+| 键名        | 描述                     | 默认值 |
+| ---         | ---                     | ---    |
+| `min-width` | 使用的最小字符数          | `3`    |
 
-Example:
+示例：
 
 ```toml
 [editor.gutters.line-numbers]
 min-width = 1
 ```
 
-#### `[editor.gutters.diagnostics]` Section
+#### `[editor.gutters.diagnostics]` 部分
 
-Currently unused
+目前未使用
 
-#### `[editor.gutters.diff]` Section
+#### `[editor.gutters.diff]` 部分
 
-The `diff` gutter option displays colored bars indicating whether a `git` diff represents that a line was added, removed or changed.
-These colors are controlled by the theme attributes `diff.plus`, `diff.minus` and `diff.delta`.
+`diff` 行号区域选项显示彩色条，指示 `git` 差异表示某行是新增、删除还是修改。
+这些颜色由主题属性 `diff.plus`、`diff.minus` 和 `diff.delta` 控制。
 
-Other diff providers will eventually be supported by a future plugin system.
+其他差异提供程序最终将通过未来的插件系统得到支持。
 
-There are currently no options for this section.
+此部分目前没有选项。
 
-#### `[editor.gutters.spacer]` Section
+#### `[editor.gutters.spacer]` 部分
 
-Currently unused
+目前未使用
 
-#### `[editor.gutters.code-action-hint]` Section
+#### `[editor.gutters.code-action-hint]` 部分
 
-The `code-action-hint` gutter option displays an indicator for whether a code action is available at current selection.
+`code-action-hint` 行号区域选项显示指示当前选区是否有可用代码操作的指示器。
 
-There are currently no options for this section.
+此部分目前没有选项。
 
-### `[editor.soft-wrap]` Section
+### `[editor.soft-wrap]` 部分
 
-Options for soft wrapping lines that exceed the view width:
+用于超出视图宽度的行软换行的选项：
 
-| Key                  | Description                                                  | Default |
-| ---                  | ---                                                          | ---     |
-| `enable`             | Whether soft wrapping is enabled.                            | `false` |
-| `max-wrap`           | Maximum free space left at the end of the line.              | `20`    |
-| `max-indent-retain`  | Maximum indentation to carry over when soft wrapping a line. | `40`    |
-| `wrap-indicator`     | Text inserted before soft wrapped lines, highlighted with `ui.virtual.wrap` | `"↪ "`    |
-| `wrap-at-text-width` | Soft wrap at `text-width` instead of using the full viewport size. | `false` |
+| 键名                 | 描述                                                  | 默认值 |
+| ---                  | ---                                                  | ---     |
+| `enable`             | 是否启用软换行。                            | `false` |
+| `max-wrap`           | 行尾保留的最大可用空间。              | `20`    |
+| `max-indent-retain`  | 软换行时保留的最大缩进量。 | `40`    |
+| `wrap-indicator`     | 软换行前插入的文本，使用 `ui.virtual.wrap` 高亮 | `"↪ "`    |
+| `wrap-at-text-width` | 在 `text-width` 处软换行，而不是使用完整的视口大小。 | `false` |
 
-Example:
+示例：
 
 ```toml
 [editor.soft-wrap]
 enable = true
-max-wrap = 25 # increase value to reduce forced mid-word wrapping
+max-wrap = 25 # 增大该值以减少强制在单词中间换行
 max-indent-retain = 0
-wrap-indicator = ""  # set wrap-indicator to "" to hide it
+wrap-indicator = ""  # 将 wrap-indicator 设置为 "" 以隐藏它
 ```
 
-### `[editor.smart-tab]` Section
+### `[editor.smart-tab]` 部分
 
-Options for navigating and editing using tab key.
+用于使用 Tab 键导航和编辑的选项。
 
-| Key        | Description | Default |
-|------------|-------------|---------|
-| `enable` | If set to true, then when the cursor is in a position with non-whitespace to its left, instead of inserting a tab, it will run `move_parent_node_end`. If there is only whitespace to the left, then it inserts a tab as normal. With the default bindings, to explicitly insert a tab character, press Shift-tab. | `true` |
-| `supersede-menu` | Normally, when a menu is on screen, such as when auto complete is triggered, the tab key is bound to cycling through the items. This means when menus are on screen, one cannot use the tab key to trigger the `smart-tab` command. If this option is set to true, the `smart-tab` command always takes precedence, which means one cannot use the tab key to cycle through menu items. One of the other bindings must be used instead, such as arrow keys or `C-n`/`C-p`. | `false` |
+| 键名              | 描述                                                                                                                                                                                                                                                                                                                       | 默认值  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `enable`          | 若设为 `true`，则当光标左侧有非空白字符时，按 Tab 不会插入制表符，而是执行 `move_parent_node_end` 命令。若左侧仅有空白字符，则正常插入制表符。使用默认绑定时，若要显式插入制表符，请按 Shift-Tab。                                                                                                                         | `true`  |
+| `supersede-menu`  | 通常，当屏幕上有菜单时（例如触发了自动补全），Tab 键被绑定为在菜单项间循环。这意味着当菜单显示时，无法使用 Tab 键触发 `smart-tab` 命令。若将此选项设为 `true`，则 `smart-tab` 命令始终优先，这意味着无法使用 Tab 键在菜单项间循环，而必须使用其他绑定，例如方向键或 `C-n`/`C-p`。 | `false` |
 
-
-Due to lack of support for S-tab in some terminals, the default keybindings don't fully embrace smart-tab editing experience. If you enjoy smart-tab navigation and a terminal that supports the [Enhanced Keyboard protocol](https://github.com/helix-editor/helix/wiki/Terminal-Support#enhanced-keyboard-protocol), consider setting extra keybindings:
+由于某些终端对 S-Tab 的支持有限，默认键绑定并未完全实现智能 Tab 的编辑体验。如果你喜欢智能 Tab 导航，并且使用的终端支持[增强键盘协议](https://github.com/helix-editor/helix/wiki/Terminal-Support#enhanced-keyboard-protocol)，可以考虑设置额外的键绑定。
 
 ```toml
 [keys.normal]
@@ -489,80 +478,79 @@ tab = "extend_parent_node_end"
 S-tab = "extend_parent_node_start"
 ```
 
-### `[editor.inline-diagnostics]` Section
+### `[editor.inline-diagnostics]` 部分
 
-Options for rendering diagnostics inside the text like shown below
+用于在文本中渲染诊断（如下所示）的选项。
 
 ```text
 fn main() {
   let foo = bar;
-            └─ no such value in this scope
+            └─ 此作用域中不存在该值
 }
 ```
 
-| Key        | Description | Default |
-|------------|-------------|---------|
-| `cursor-line` | The minimum severity that a diagnostic must have to be shown inline on the line that contains the primary cursor. Set to `disable` to not show any diagnostics inline. This option does not have any effect when in insert-mode and will only take effect 350ms after moving the cursor to a different line. | `"warning"` |
-| `other-lines` | The minimum severity that a diagnostic must have to be shown inline on a line that does not contain the cursor-line. Set to `disable` to not show any diagnostics inline. | `"disable"` |
-| `prefix-len` | How many horizontal bars `─` are rendered before the diagnostic text.  | `1` |
-| `max-wrap` | Equivalent of the `editor.soft-wrap.max-wrap` option for diagnostics.  | `20` |
-| `max-diagnostics` | Maximum number of diagnostics to render inline for a given line  | `10` |
+| 键名              | 描述                                                                                                                             | 默认值      |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------|
+| `cursor-line`     | 诊断必须具有的最低严重级别，才能在包含主光标的行内联显示。设置为 `disable` 则不显示任何内联诊断。此选项在插入模式下无效，仅在光标移动到不同行后 350ms 生效。 | `"warning"` |
+| `other-lines`     | 诊断必须具有的最低严重级别，才能在非光标所在行内联显示。设置为 `disable` 则不显示任何内联诊断。                               | `"disable"` |
+| `prefix-len`      | 诊断文本前渲染的水平横线 `─` 的数量。                                                                                           | `1`         |
+| `max-wrap`        | 相当于诊断的 `editor.soft-wrap.max-wrap` 选项。                                                                                  | `20`        |
+| `max-diagnostics` | 给定行内联显示的最大诊断数量。                                                                                                  | `10`        |
 
-The allowed values for `cursor-line` and `other-lines` are: `error`, `warning`, `info`, `hint`.
+`cursor-line` 和 `other-lines` 允许的值为：`error`、`warning`、`info`、`hint`。
 
-The (first) diagnostic with the highest severity that is not shown inline is rendered at the end of the line (as long as its severity is higher than the `end-of-line-diagnostics` config option):
+未内联显示的最高严重级别的（第一个）诊断会呈现在行尾（只要其严重级别高于 `end-of-line-diagnostics` 配置选项）：
 
 ```text
 fn main() {
   let baz = 1;
-  let foo = bar; a local variable with a similar name exists: baz
-            └─ no such value in this scope
+  let foo = bar; 存在名称相似的局部变量：baz
+            └─ 此作用域中不存在该值
 }
 ```
 
-### `[editor.word-completion]` Section
+### `[editor.word-completion]` 部分
 
-Options for controlling completion of words from open buffers.
+控制从打开的缓冲区中补全单词的选项。
 
-| Key                  | Description                                                    | Default  |
-| ---                  | ---                                                            | ---      |
-| `enable`             | Whether word completion is enabled                             | `true`   |
-| `trigger-length`     | Number of word characters to type before triggering completion | `7`      |
+| 键名             | 描述                                       | 默认值   |
+|------------------|--------------------------------------------|----------|
+| `enable`         | 是否启用单词补全                           | `true`   |
+| `trigger-length` | 触发补全前需要键入的单词字符数             | `7`      |
 
-Example:
+示例：
 
 ```toml
 [editor.word-completion]
 enable = true
-# Set the trigger length lower so that words are completed more often
+# 降低触发长度，使单词补全更频繁出现
 trigger-length = 4
 ```
 
-### `[editor.workspace-trust]` Section
+### `[editor.workspace-trust]` 部分
 
-Controls implicit workspace trust. See the [workspace
-trust](./workspace-trust.md) chapter for the full feature.
+控制隐式工作区信任。完整功能请参见[工作区信任](./workspace-trust.md)章节。
 
-| Key       | Description                                                              | Default     |
-| ---       | ---                                                                      | ---         |
-| `level`   | The default level of trust for every workspace.                         | `"servers"` |
-| `prompt`  | Whether to show a modal when opening a file in an untrusted workspace.   | `true`      |
-| `trusted` | Glob patterns whose matching workspaces are trusted without a grant.     | `[]`        |
+| 键名      | 描述                                                                 | 默认值      |
+|-----------|----------------------------------------------------------------------|-------------|
+| `level`   | 每个工作区的默认信任级别。                                           | `"servers"` |
+| `prompt`  | 在不受信任的工作区中打开文件时是否显示模态提示。                       | `true`      |
+| `trusted` | 通配符模式，匹配的工作区无需授予即可被信任。                         | `[]`        |
 
 Example:
 
 ```toml
 [editor.workspace-trust]
-# Even if `false`, the statusline `[⚠]` indicator is still shown.
+# 即使为 `false`，状态栏中的 `[⚠]` 指示器仍然会显示。
 prompt = false
 
-# "none":     prompt for every workspace.
-# "servers":  trust LSP and DAP launches but still gate local config and git;
-#             .helix/config.toml, .helix/languages.toml, etc. need :workspace-trust.
-# "insecure": trust everything (discouraged).
+# "none":     对每个工作区都进行提示。
+# "servers":  信任 LSP 和 DAP 启动，但仍然限制本地配置和 git；
+#             .helix/config.toml、.helix/languages.toml 等需要 :workspace-trust。
+# "insecure": 信任所有内容（不推荐）。
 level = "servers"
 
-# Discouraged: skips .helix/ change detection and trusts anything that lands
-# under a matching path. `~` and environment variables are expanded.
+# 不推荐：跳过 .helix/ 变更检测，并信任匹配路径下的所有内容。
+# `~` 和环境变量会被展开。
 trusted = ["~/src/github.com/me/*"]
 ```

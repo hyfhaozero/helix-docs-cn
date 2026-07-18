@@ -1,48 +1,37 @@
-## Selecting and manipulating text with textobjects
+## 使用文本对象选择和操作文本
 
-In Helix, textobjects are a way to select, manipulate and operate on a piece of
-text in a structured way. They allow you to refer to blocks of text based on
-their structure or purpose, such as a word, sentence, paragraph, or even a
-function or block of code.
+在 Helix 中，文本对象是一种以结构化方式选择、操作和处理文本的方式。它们允许你根据文本的结构或用途来引用文本块，例如单词、句子、段落，甚至是函数或代码块。
 
-![Textobject demo](https://user-images.githubusercontent.com/23398472/124231131-81a4bb00-db2d-11eb-9d10-8e577ca7b177.gif)
-![Textobject tree-sitter demo](https://user-images.githubusercontent.com/23398472/132537398-2a2e0a54-582b-44ab-a77f-eb818942203d.gif)
+![文本对象演示](https://user-images.githubusercontent.com/23398472/124231131-81a4bb00-db2d-11eb-9d10-8e577ca7b177.gif)
+![文本对象 tree-sitter 演示](https://user-images.githubusercontent.com/23398472/132537398-2a2e0a54-582b-44ab-a77f-eb818942203d.gif)
 
-- `ma` - Select around the object (`va` in Vim, `<alt-a>` in Kakoune)
-- `mi` - Select inside the object (`vi` in Vim, `<alt-i>` in Kakoune)
+- `ma` - 选择对象周围（Vim 中的 `va`，Kakoune 中的 `<alt-a>`）
+- `mi` - 选择对象内部（Vim 中的 `vi`，Kakoune 中的 `<alt-i>`）
 
-| Key after `mi` or `ma` | Textobject selected      |
-| ---                    | ---                      |
-| `w`                    | Word                     |
-| `W`                    | WORD                     |
-| `p`                    | Paragraph                |
-| `(`, `[`, `'`, etc.    | Specified surround pairs |
-| `m`                    | The closest surround pair    |
-| `f`                    | Function                 |
-| `t`                    | Type (or Class)          |
-| `a`                    | Argument/parameter       |
-| `c`                    | Comment                  |
-| `T`                    | Test                     |
-| `g`                    | Change                   |
-| `x`                    | (X)HTML element          |
+| `mi` 或 `ma` 后的按键 | 所选文本对象         |
+| ---                    | ---                 |
+| `w`                    | 单词                |
+| `W`                    | 长单词（仅按空白分隔） |
+| `p`                    | 段落                |
+| `(`, `[`, `'`, 等     | 指定的成对环绕符号   |
+| `m`                    | 最近的成对环绕符号   |
+| `f`                    | 函数                |
+| `t`                    | 类型（或类）         |
+| `a`                    | 参数                |
+| `c`                    | 注释                |
+| `T`                    | 测试                |
+| `g`                    | 变更（diff）        |
+| `x`                    | （X）HTML 元素      |
 
-> 💡 `f`, `t`, etc. need a tree-sitter grammar active for the current
-document and a special tree-sitter query file to work properly. [Only
-some grammars](./lang-support.md) currently have the query file implemented.
-Contributions are welcome!
+> 💡 `f`、`t` 等功能需要当前文档激活 tree-sitter 语法，并且需要特殊的 tree-sitter 查询文件才能正常工作。目前[只有部分语法](./lang-support.md)实现了该查询文件。欢迎贡献！
 
-## Navigating using tree-sitter textobjects
+## 使用 tree-sitter 文本对象进行导航
 
-Navigating between functions, classes, parameters, and other elements is
-possible using tree-sitter and textobject queries. For
-example to move to the next function use `]f`, to move to previous
-type use `[t`, and so on.
+使用 tree-sitter 和文本对象查询，可以在函数、类、参数和其他元素之间导航。例如，使用 `]f` 移动到下一个函数，使用 `[t` 移动到上一个类型，以此类推。
 
-![Tree-sitter-nav-demo](https://user-images.githubusercontent.com/23398472/152332550-7dfff043-36a2-4aec-b8f2-77c13eb56d6f.gif)
+![Tree-sitter 导航演示](https://user-images.githubusercontent.com/23398472/152332550-7dfff043-36a2-4aec-b8f2-77c13eb56d6f.gif)
 
-For the full reference see the [unimpaired](./keymap.md#unimpaired) section of the key bind
-documentation.
+完整参考请参见键绑定文档中的 [unimpaired](./keymap.md#unimpaired) 部分。
 
-> 💡 This feature relies on tree-sitter textobjects
-> and requires the corresponding query file to work properly.
+> 💡 此功能依赖于 tree-sitter 文本对象，并且需要相应的查询文件才能正常工作。
 

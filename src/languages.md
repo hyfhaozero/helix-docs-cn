@@ -1,19 +1,14 @@
-## Languages
+## 语言
 
-Language-specific settings and settings for language servers are configured
-in `languages.toml` files.
+语言特定的设置和语言服务器的设置在 `languages.toml` 文件中配置。
 
-## `languages.toml` files
+## `languages.toml` 文件
 
-There are three possible locations for a `languages.toml` file:
+`languages.toml` 文件有三个可能的位置：
 
-1. In the Helix source code, which lives in the
-   [Helix repository](https://github.com/helix-editor/helix/blob/master/languages.toml).
-   It provides the default configurations for languages and language servers.
+1. Helix 源代码中，位于 [Helix 仓库](https://github.com/helix-editor/helix/blob/master/languages.toml)。它提供语言和语言服务器的默认配置。
 
-2. In your [configuration directory](./configuration.md). This overrides values
-   from the built-in language configuration. For example, to disable
-   auto-formatting for Rust:
+2. 你的[配置目录](./configuration.md)中。这会覆盖内置语言配置中的值。例如，要禁用 Rust 的自动格式化：
 
    ```toml
    # in <config_dir>/helix/languages.toml
@@ -26,15 +21,11 @@ There are three possible locations for a `languages.toml` file:
    auto-format = false
    ```
 
-3. In a `.helix` folder in your project. Language configuration may also be
-   overridden local to a project by creating a `languages.toml` file in a
-   `.helix` folder. Its settings will be merged with the language configuration
-   in the configuration directory and the built-in configuration.
+3. 在项目中的 `.helix` 文件夹中。通过在 `.helix` 文件夹中创建 `languages.toml` 文件，也可以针对项目覆盖语言配置。其设置将与配置目录中的语言配置和内置配置合并。
 
-## Language configuration
+## 语言配置
 
-Each language is configured by adding a `[[language]]` section to a
-`languages.toml` file. For example:
+每种语言通过在 `languages.toml` 文件中添加 `[[language]]` 部分来配置。例如：
 
 ```toml
 [[language]]
@@ -48,126 +39,98 @@ formatter = { command = "mylang-formatter" , args = ["--stdin"] }
 language-servers = [ "mylang-lsp" ]
 ```
 
-These configuration keys are available:
+以下是可用的配置键：
 
-| Key                   | Description                                                   |
-| ----                  | -----------                                                   |
-| `name`                | The name of the language                                      |
-| `language-id`         | The language-id for language servers, checkout the table at [TextDocumentItem](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem) for the right id |
-| `scope`               | A string like `source.js` that identifies the language. Currently, we strive to match the scope names used by popular TextMate grammars and by the Linguist library. Usually `source.<name>` or `text.<name>` in case of markup languages |
-| `injection-regex`     | regex pattern that will be tested against a language name in order to determine whether this language should be used for a potential [language injection][treesitter-language-injection] site. |
-| `file-types`          | The filetypes of the language, for example `["yml", "yaml"]`. See the file-type detection section below. |
-| `shebangs`            | The interpreters from the shebang line, for example `["sh", "bash"]` |
-| `roots`               | A set of marker files used for LSP working directory selection. Helix starts at the file, walks upward, and remembers the *topmost* i.e. *last* directory that contains a marker file. For example Cargo.lock, yarn.lock |
-| `auto-format`         | Whether to autoformat this language when saving               |
-| `diagnostic-severity` | Minimal severity of diagnostic for it to be displayed. (Allowed values: `error`, `warning`, `info`, `hint`) |
-| `comment-tokens`      | The tokens to use as a comment token, either a single token `"//"` or an array `["//", "///", "//!"]` (the first token will be used for commenting). Also configurable as `comment-token` for backwards compatibility|
-| `block-comment-tokens`| The start and end tokens for a multiline comment either an array or single table of `{ start = "/*", end = "*/"}`. The first set of tokens will be used for commenting, any pairs in the array can be uncommented |
-| `indent`              | The indent to use. Has sub keys `unit` (the text inserted into the document when indenting; usually set to N spaces or `"\t"` for tabs) and `tab-width` (the number of spaces rendered for a tab) |
-| `language-servers`    | The Language Servers used for this language. See below for more information in the section [Configuring Language Servers for a language](#configuring-language-servers-for-a-language)   |
-| `grammar`             | The tree-sitter grammar to use (defaults to the value of `name`) |
-| `formatter`           | The formatter for the language, it will take precedence over the lsp when defined. The formatter must be able to take the original file as input from stdin and write the formatted file to stdout. The filename of the current buffer can be passed as argument by using the `%{buffer_name}` expansion variable. See below for more information in the [Configuring the formatter command](#configuring-the-formatter-command) |
-| `soft-wrap`           | [editor.softwrap](./editor.md#editorsoft-wrap-section)
-| `text-width`          |  Maximum line length. Used for the `:reflow` command and soft-wrapping if `soft-wrap.wrap-at-text-width` is set, defaults to `editor.text-width`   |
-| `rulers`              | Overrides the `editor.rulers` config key for the language. |
-| `path-completion`     | Overrides the `editor.path-completion` config key for the language. |
-| `word-completion`     | Overrides the [`editor.word-completion`](./editor.md#editorword-completion-section) configuration for the language. |
-| `workspace-lsp-roots`     | Directories (relative to the workspace root) that stop the upward root search early. Meant for project-specific hard overrides in a local `.helix/config.toml`; |
-| `persistent-diagnostic-sources` | An array of LSP diagnostic sources assumed unchanged when the language server resends the same set of diagnostics. Helix can track the position for these diagnostics internally instead. Useful for diagnostics that are recomputed on save.
-| `rainbow-brackets` | Overrides the `editor.rainbow-brackets` config key for the language |
-| `code-actions-on-save`    | List of LSP code actions to be run in order on save, for example `["source.organizeImports"]` |
+| 键名                     | 描述                                                                                                                         |
+| ----                    | -----------                                                                                                                  |
+| `name`                  | 语言名称                                                                                                                     |
+| `language-id`           | 语言服务器的语言 ID，请查看 [TextDocumentItem](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem) 中的表格以获取正确的 ID |
+| `scope`                 | 类似于 `source.js` 的字符串，用于标识语言。目前，我们力求匹配流行的 TextMate 语法和 Linguist 库使用的作用域名称。通常为 `source.<name>` 或标记语言情况下的 `text.<name>` |
+| `injection-regex`       | 正则表达式模式，将针对语言名称进行测试，以确定是否应将此语言用于潜在的[语言注入][treesitter-language-injection]位置。          |
+| `file-types`            | 语言的文件类型，例如 `["yml", "yaml"]`。请参阅下面的文件类型检测部分。                                                        |
+| `shebangs`              | Shebang 行中的解释器，例如 `["sh", "bash"]`                                                                                 |
+| `roots`                 | 用于 LSP 工作目录选择的一组标记文件。Helix 从文件开始向上查找，并记住包含标记文件的**最顶层**即**最后一个**目录。例如 Cargo.lock、yarn.lock |
+| `auto-format`           | 是否在保存时自动格式化此语言                                                                                                 |
+| `comment-tokens`        | 用作行注释的令牌，可以是单个令牌如 `"//"` 或数组如 `["//", "///", "//!"]`（第一个令牌将用于注释）。也可配置为 `comment-token` 以向后兼容 |
+| `block-comment-tokens`  | 多行注释的起始和结束令牌，可以是数组或单个表 `{ start = "/*", end = "*/"}`。第一组令牌将用于注释，数组中的任何对都可以取消注释 |
+| `indent`                | 要使用的缩进。包含子键 `unit`（缩进时插入文档的文本；通常设置为 N 个空格或制表符的 `"\t"`）和 `tab-width`（制表符渲染的空格数） |
+| `language-servers`      | 此语言使用的语言服务器。有关更多信息，请参见下文 [为语言配置语言服务器](#configuring-language-servers-for-a-language) 部分 |
+| `grammar`               | 要使用的 tree-sitter 语法（默认为 `name` 的值）                                                                             |
+| `formatter`             | 语言的格式化程序，当定义时会优先于 LSP。格式化程序必须能够将原始文件作为标准输入读取，并将格式化后的文件写入标准输出。当前缓冲区的文件名可以通过使用 `%{buffer_name}` 展开变量作为参数传递。有关更多信息，请参见下文 [配置格式化命令](#configuring-the-formatter-command) |
+| `soft-wrap`             | [editor.softwrap](./editor.md#editorsoft-wrap-section)                                                                       |
+| `text-width`            | 最大行长度。用于 `:reflow` 命令和软换行（如果设置了 `soft-wrap.wrap-at-text-width`），默认为 `editor.text-width`               |
+| `rulers`                | 覆盖语言的 `editor.rulers` 配置键。                                                                                          |
+| `path-completion`       | 覆盖语言的 `editor.path-completion` 配置键。                                                                                 |
+| `word-completion`       | 覆盖语言的 [`editor.word-completion`](./editor.md#editorword-completion-section) 配置。                                      |
+| `workspace-lsp-roots`   | 在工作区根目录中提前停止向上根搜索的目录（相对于工作区根目录）。用于本地 `.helix/config.toml` 中的项目特定硬覆盖。            |
+| `persistent-diagnostic-sources` | 当语言服务器重新发送相同的诊断集时，假定不变的 LSP 诊断源数组。Helix 可以在内部跟踪这些诊断的位置。对于保存时重新计算的诊断很有用。 |
+| `rainbow-brackets`      | 覆盖语言的 `editor.rainbow-brackets` 配置键。                                                                               |
+| `code-actions-on-save`  | 保存时按顺序运行的 LSP 代码操作列表，例如 `["source.organizeImports"]`                                                    |
 
-## Project and LSP root selection
+## 项目和 LSP 根目录选择
 
-This is the model Helix uses:
+这是 Helix 使用的模型：
 
-- The **workspace root** is found once by walking upward from the current
-  working directory and picking the first directory that contains `.git`, `.svn`,
-  `.jj`, or `.helix`. If none are found, the current working directory is the
-  workspace root.
-- Root markers (`roots`) are used only for LSP root selection and are found by
-  starting at the **file**, not the folder Helix was opened in.
-- We use the **topmost** directory that has a root marker (we stop the search at
-  the workspace root).
-- In most cases, root markers are enough. In some repos there are multiple
-  nested root markers and whether you want the inner or outer one is project
-  specific. For these situations, use `workspace-lsp-roots` to stop the search
-  early in a particular directory.
-- `workspace-lsp-roots` is meant to be set in the **project-specific** config:
-  `$PROJECT/.helix/config.toml`.
+- **工作区根目录**通过从当前工作目录向上查找，并选择包含 `.git`、`.svn`、`.jj` 或 `.helix` 的第一个目录来确定。如果未找到任何目录，则当前工作目录即为工作区根目录。
+- 根标记（`roots`）仅用于 LSP 根目录选择，并且是从**文件**（而非 Helix 打开的文件夹）开始查找。
+- 我们使用具有根标记的**最顶层**目录（搜索会在工作区根目录处停止）。
+- 在大多数情况下，根标记已足够。在某些仓库中，存在多个嵌套的根标记，而你需要使用内部还是外部的标记取决于具体项目。对于这些情况，可以使用 `workspace-lsp-roots` 在特定目录中提前停止搜索。
+- `workspace-lsp-roots` 旨在**项目特定**配置中设置：`$PROJECT/.helix/config.toml`。
 
-Interaction with `required-root-patterns` (a language_server configuration key):
+与 `required-root-patterns`（语言服务器配置键）的交互：
 
-- After the LSP root is selected, Helix checks for `required-root-patterns` in
-  that directory. If none match, the server is not started.
-- This is validation, not root detection.
+- 选定 LSP 根目录后，Helix 会在该目录中检查 `required-root-patterns`。如果没有匹配项，则不会启动服务器。
+- 这是验证，而非根目录检测。
 
-### File-type detection and the `file-types` key
+### 文件类型检测与 `file-types` 键
 
-Helix determines which language configuration to use based on the `file-types` key
-from the above section. `file-types` is a list of strings or tables, for
-example:
+Helix 根据上一节中的 `file-types` 键确定要使用的语言配置。`file-types` 是字符串或表的列表，例如：saving               |
+| `diagnostic-severity` | 诊断显示的最低严重级别。（允许值：`error`、`warning`、`info`、`hint`） |
+| `comment-tokens`      | 用作注释令牌的令牌，可以是单个令牌
 
 ```toml
 file-types = ["toml", { glob = "Makefile" }, { glob = ".git/config" }, { glob = ".github/workflows/*.yaml" } ]
 ```
 
-When determining a language configuration to use, Helix searches the file-types
-with the following priorities:
+在确定要使用的语言配置时，Helix 按以下优先级搜索 `file-types`：
 
-1. Glob: values in `glob` tables are checked against the full path of the given
-   file. Globs are standard Unix-style path globs (e.g. the kind you use in Shell)
-   and can be used to match paths for a specific prefix, suffix, directory, etc.
-   In the above example, the `{ glob = "Makefile" }` config would match files
-   with the name `Makefile`, the `{ glob = ".git/config" }` config would match
-   `config` files in `.git` directories, and the `{ glob = ".github/workflows/*.yaml" }`
-   config would match any `yaml` files in `.github/workflow` directories. Note
-   that globs should always use the Unix path separator `/` even on Windows systems;
-   the matcher will automatically take the machine-specific separators into account.
-   If the glob isn't an absolute path or doesn't already start with a glob prefix,
-   `*/` will automatically be added to ensure it matches for any subdirectory.
-2. Extension: if there are no glob matches, any `file-types` string that matches
-   the file extension of a given file wins. In the example above, the `"toml"`
-   config matches files like `Cargo.toml` or `languages.toml`.
+1. Glob：`glob` 表中的值会与给定文件的完整路径进行匹配。Glob 是标准的 Unix 风格路径通配符（例如 Shell 中使用的那种），可用于匹配特定前缀、后缀、目录等的路径。在上述示例中，`{ glob = "Makefile" }` 配置会匹配名为 `Makefile` 的文件，`{ glob = ".git/config" }` 配置会匹配 `.git` 目录中的 `config` 文件，而 `{ glob = ".github/workflows/*.yaml" }` 配置会匹配 `.github/workflow` 目录中的任何 `yaml` 文件。请注意，即使在 Windows 系统上，glob 也应始终使用 Unix 路径分隔符 `/`；匹配器会自动考虑特定于机器的分隔符。如果 glob 不是绝对路径且尚未以 glob 前缀开头，则会自动添加 `*/` 以确保它匹配任何子目录。
+2. 扩展名：如果没有 glob 匹配，则任何匹配给定文件扩展名的 `file-types` 字符串胜出。在上述示例中，`"toml"` 配置会匹配 `Cargo.toml` 或 `languages.toml` 等文件。
 
-### Configuring the formatter command
+### 配置格式化命令
 
-[Command line expansions](./command-line.md#expansions) are supported in the arguments
-of the formatter command. In particular, the `%{buffer_name}` variable can be passed as
-argument to the formatter:
+格式化命令的参数中支持[命令行展开](./command-line.md#expansions)。特别是，`%{buffer_name}` 变量可以作为参数传递给格式化程序：
 
 ```toml
 formatter = { command = "mylang-formatter" , args = ["--stdin", "--stdin-filename", "%{buffer_name}"] }
 ```
 
-### Configuring code actions on save
+### 配置保存时执行的代码操作
 
-The `code-actions-on-save` key lists LSP code actions to run (in order) when
-the buffer is saved. The available actions depend on available language servers,
-below are common examples and may need adjusting for your setup.
+`code-actions-on-save` 键列出了在保存缓冲区时要执行的 LSP 代码操作（按顺序）。可用操作取决于已配置的语言服务器，以下是一些常见示例，可能需要根据你的设置进行调整。
 
 ```toml
-# Python with ruff
+# Python + ruff
 [[language]]
 name = "python"
 code-actions-on-save = ["source.organizeImports", "source.fixAll"]
 
-# TS/JS with tsserver
+# TS/JS + tsserver
 [[language]]
 name = "typescript"
 code-actions-on-save = ["source.addMissingImports.ts"]
 
-# TS/JS with eslint
+# TS/JS + eslint
 [[language]]
 name = "javascript"
 code-actions-on-save = ["source.fixAll.eslint", "source.organizeImports"]
 ```
 
-## Language Server configuration
+## 语言服务器配置
 
-Language servers are configured separately in the table `language-server` in the same file as the languages `languages.toml`
+语言服务器在与语言相同的文件 `languages.toml` 中的 `language-server` 表中单独配置。
 
-For example:
+例如：
 
 ```toml
 [language-server.mylang-lsp]
@@ -184,20 +147,18 @@ documentFormatting = true
 languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
 ```
 
-These are the available options for a language server.
+以下是语言服务器的可用选项。
 
-| Key                        | Description                                                                                                                       |
-| ----                       | -----------                                                                                                                       |
-| `command`                  | The name or path of the language server binary to execute. Binaries must be in `$PATH`                                            |
-| `args`                     | A list of arguments to pass to the language server binary                                                                         |
-| `config`                   | Language server initialization options                                                                                            |
-| `timeout`                  | The maximum time a request to the language server may take, in seconds. Defaults to `20`                                          |
-| `environment`              | Any environment variables that will be used when starting the language server `{ "KEY1" = "Value1", "KEY2" = "Value2" }`          |
-| `required-root-patterns`   | A list of `glob` patterns to look for in the working directory of the lsp. The language server is only started if at least one of them is found. |
+| 键名                       | 描述                                                                                                                           |
+| ----                       | -----------                                                                                                                   |
+| `command`                  | 要执行的语言服务器二进制文件的名称或路径。二进制文件必须在 `$PATH` 中                                                         |
+| `args`                     | 传递给语言服务器二进制文件的参数列表                                                                                           |
+| `config`                   | 语言服务器初始化选项                                                                                                           |
+| `timeout`                  | 对语言服务器请求的最大时间，以秒为单位。默认为 `20`                                                                            |
+| `environment`              | 启动语言服务器时将使用的环境变量 `{ "KEY1" = "Value1", "KEY2" = "Value2" }`                                                    |
+| `required-root-patterns`   | 在 LSP 工作目录中查找的 `glob` 模式列表。仅当找到至少一个匹配项时才启动语言服务器。                                             |
 
-A `format` sub-table within `config` can be used to pass extra formatting options to
-[Document Formatting Requests](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting).
-For example, with typescript:
+`config` 中的 `format` 子表可用于向[文档格式化请求](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting)传递额外的格式化选项。例如，使用 typescript：
 
 ```toml
 [language-server.typescript-language-server]
@@ -205,22 +166,19 @@ For example, with typescript:
 config = { format = { "semicolons" = "insert", "insertSpaceBeforeFunctionParenthesis" = true } }
 ```
 
-### Configuring Language Servers for a language
+### 为语言配置语言服务器
 
-The `language-servers` attribute in a language tells helix which language servers are used for this language.
+语言中的 `language-servers` 属性告诉 Helix 该语言使用哪些语言服务器。
 
-They have to be defined in the `[language-server]` table as described in the previous section.
+它们必须在 `[language-server]` 表中定义，如前一节所述。
 
-Different languages can use the same language server instance, e.g. `typescript-language-server` is used for javascript, jsx, tsx and typescript by default.
+不同的语言可以使用相同的语言服务器实例，例如 `typescript-language-server` 默认用于 javascript、jsx、tsx 和 typescript。
 
-The definition order of language servers affects the order in the results list of code action menu.
+语言服务器的定义顺序会影响代码操作菜单结果列表中的顺序。
 
-In case multiple language servers are specified in the `language-servers` attribute of a `language`,
-it's often useful to only enable/disable certain language-server features for these language servers.
+如果在 `language` 的 `language-servers` 属性中指定了多个语言服务器，通常只需要对这些语言服务器启用/禁用某些特定功能。
 
-As an example, `efm-lsp-prettier` of the previous example is used only with a formatting command `prettier`,
-so everything else should be handled by the `typescript-language-server` (which is configured by default).
-The language configuration for typescript could look like this:
+例如，上一示例中的 `efm-lsp-prettier` 仅用于格式化命令 `prettier`，因此其他所有功能应由 `typescript-language-server` 处理（默认已配置）。typescript 的语言配置可能如下所示：
 
 ```toml
 [[language]]
@@ -228,7 +186,7 @@ name = "typescript"
 language-servers = [ { name = "efm-lsp-prettier", only-features = [ "format" ] }, "typescript-language-server" ]
 ```
 
-or equivalent:
+或者：
 
 ```toml
 [[language]]
@@ -236,13 +194,9 @@ name = "typescript"
 language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
 ```
 
-Each requested LSP feature is prioritized in the order of the `language-servers` array.
-For example, the first `goto-definition` supported language server (in this case `typescript-language-server`) will be taken for the relevant LSP request (command `goto_definition`).
-The features `diagnostics`, `code-action`, `completion`, `document-symbols` and `workspace-symbols` are an exception to that rule, as they are working for all language servers at the same time and are merged together, if enabled for the language.
-If no `except-features` or `only-features` is given, all features for the language server are enabled.
-If a language server itself doesn't support a feature, the next language server array entry will be tried (and so on).
+每个请求的 LSP 功能按 `language-servers` 数组的顺序进行优先级排序。例如，第一个支持 `goto-definition` 的语言服务器（此处为 `typescript-language-server`）将被用于相关的 LSP 请求（命令 `goto_definition`）。`diagnostics`、`code-action`、`completion`、`document-symbols` 和 `workspace-symbols` 功能是该规则的例外，因为它们同时为所有语言服务器工作，并且如果为该语言启用，则会合并在一起。如果未指定 `except-features` 或 `only-features`，则语言服务器的所有功能均被启用。如果语言服务器本身不支持某个功能，则会尝试数组中的下一个语言服务器条目（以此类推）。
 
-The list of supported features is:
+支持的功能列表：
 
 - `format`
 - `goto-declaration`
@@ -266,10 +220,9 @@ The list of supported features is:
 - `document-colors`
 - `call-hierarchy`
 
-## Tree-sitter grammar configuration
+## Tree-sitter 语法配置
 
-The source for a language's tree-sitter grammar is specified in a `[[grammar]]`
-section in `languages.toml`. For example:
+语言的 tree-sitter 语法源在 `languages.toml` 的 `[[grammar]]` 部分中指定。例如：
 
 ```toml
 [[grammar]]
@@ -277,26 +230,24 @@ name = "mylang"
 source = { git = "https://github.com/example/mylang", rev = "a250c4582510ff34767ec3b7dcdd3c24e8c8aa68" }
 ```
 
-Grammar configuration takes these keys:
+语法配置包含以下键：
 
-| Key      | Description                                                              |
-| ---      | -----------                                                              |
-| `name`   | The name of the tree-sitter grammar                                      |
-| `source` | The method of fetching the grammar - a table with a schema defined below |
+| 键名     | 描述                                                               |
+| ---      | -----------                                                       |
+| `name`   | tree-sitter 语法名称                                               |
+| `source` | 获取语法的方式 - 一个具有如下定义模式的表                          |
 
-Where `source` is a table with either these keys when using a grammar from a
-git repository:
+当从 git 仓库使用语法时，`source` 是一个包含以下键的表：
 
-| Key    | Description                                               |
-| ---    | -----------                                               |
-| `git`  | A git remote URL from which the grammar should be cloned  |
-| `rev`  | The revision (commit hash or tag) which should be fetched |
-| `subpath` | A path within the grammar directory which should be built. Some grammar repositories host multiple grammars (for example `tree-sitter-typescript` and `tree-sitter-ocaml`) in subdirectories. This key is used to point `hx --grammar build` to the correct path for compilation. When omitted, the root of repository is used |
+| 键名       | 描述                                                           |
+| ---        | -----------                                                   |
+| `git`      | 应克隆语法的 git 远程 URL                                      |
+| `rev`      | 应获取的修订版本（提交哈希或标签）                             |
+| `subpath`  | 语法目录中应构建的子路径。某些语法仓库在子目录中托管多个语法（例如 `tree-sitter-typescript` 和 `tree-sitter-ocaml`）。此键用于指示 `hx --grammar build` 到正确的编译路径。省略时，使用仓库根目录 |
 
-### Choosing grammars
+### 选择语法
 
-You may use a top-level `use-grammars` key to control which grammars are
-fetched and built when using `hx --grammar fetch` and `hx --grammar build`.
+你可以使用顶层 `use-grammars` 键来控制在使用 `hx --grammar fetch` 和 `hx --grammar build` 时获取和构建哪些语法。
 
 ```toml
 # Note: this key must come **before** the [[language]] and [[grammar]] sections
@@ -305,6 +256,6 @@ use-grammars = { only = [ "rust", "c", "cpp" ] }
 use-grammars = { except = [ "yaml", "json" ] }
 ```
 
-When omitted, all grammars are fetched and built.
+若省略，则会获取并构建所有语法。
 
 [treesitter-language-injection]: https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html#language-injection

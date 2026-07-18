@@ -1,14 +1,12 @@
-## Moving the selection with syntax-aware motions
+## 使用语法感知移动来移动选区
 
-`Alt-p`, `Alt-o`, `Alt-i`, and `Alt-n` (or `Alt` and arrow keys) allow you to move the 
-selection according to its location in the syntax tree. For example, many languages have the
-following syntax for function calls:
+`Alt-p`、`Alt-o`、`Alt-i` 和 `Alt-n`（或 `Alt` 加方向键）允许你根据选区在语法树中的位置来移动选区。例如，许多语言都有以下函数调用的语法：
 
 ```js
 func(arg1, arg2, arg3);
 ```
 
-A function call might be parsed by tree-sitter into a tree like the following.
+tree-sitter 可能会将函数调用解析为如下所示的树。
 
 ```tsq
 (call
@@ -20,8 +18,7 @@ A function call might be parsed by tree-sitter into a tree like the following.
       (identifier)))     ; arg3
 ```
 
-Use `:tree-sitter-subtree` to view the syntax tree of the primary selection. In
-a more intuitive tree format:
+使用 `:tree-sitter-subtree` 查看主选区的语法树。以更直观的树形格式表示：
 
 ```text
             ┌────┐
@@ -39,28 +36,21 @@ a more intuitive tree format:
    └──────────┘  └──────────┘  └──────────┘
 ```
 
-If you have a selection that wraps `arg1` (see the tree above), and you use
-`Alt-n`, it will select the next sibling in the syntax tree: `arg2`.
+如果你的选区包裹了 `arg1`（见上方的树形图），使用 `Alt-n` 将会选择语法树中的下一个兄弟节点：`arg2`。
 
 ```js
-// before
+// 原来
 func([arg1], arg2, arg3)
-// after
+// 现在
 func(arg1, [arg2], arg3);
 ```
 
-Similarly, `Alt-o` will expand the selection to the parent node, in this case, the
-arguments node.
+同样地，`Alt-o` 会将选区展开到父节点，在此例中即为 `arguments` 节点。
 
 ```js
 func[(arg1, arg2, arg3)];
 ```
 
-There is also some nuanced behavior that prevents you from getting stuck on a
-node with no sibling. When using `Alt-p` with a selection on `arg1`, the previous
-child node will be selected. In the event that `arg1` does not have a previous
-sibling, the selection will move up the syntax tree and select the previous
-element. As a result, using `Alt-p` with a selection on `arg1` will move the
-selection to the "func" `identifier`.
+此外，还有一些精细的行为设计，可以防止你因为节点没有兄弟节点而被卡住。当你的选区在 `arg1` 上并使用 `Alt-p` 时，会选则前一个子节点。如果 `arg1` 没有前一个兄弟节点，选区会向上移动到语法树并选择前一个元素。因此，在选区位于 `arg1` 上时使用 `Alt-p`，会将选区移动到 `identifier` 节点 `"func"` 上。
 
 [lang-support]: ./lang-support.md

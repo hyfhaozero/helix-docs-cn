@@ -1,24 +1,23 @@
-## Surround
+## 环绕
 
-Helix includes built-in functionality similar to [vim-surround](https://github.com/tpope/vim-surround).
-The keymappings have been inspired from [vim-sandwich](https://github.com/machakann/vim-sandwich):
+Helix 内置了类似 [vim-surround](https://github.com/tpope/vim-surround) 的功能。
+键位映射灵感来自 [vim-sandwich](https://github.com/machakann/vim-sandwich)：
 
-![Surround demo](https://user-images.githubusercontent.com/23398472/122865801-97073180-d344-11eb-8142-8f43809982c6.gif)
+![环绕演示](https://user-images.githubusercontent.com/23398472/122865801-97073180-d344-11eb-8142-8f43809982c6.gif)
 
-| Key Sequence                      | Action                                  |
-| --------------------------------- | --------------------------------------- |
-| `ms<char>` (after selecting text) | Add surround characters to selection    |
-| `mr<char_to_replace><new_char>`   | Replace the closest surround characters |
-| `md<char_to_delete>`              | Delete the closest surround characters  |
+| 按键序列                          | 操作                                   |
+| --------------------------------- | -------------------------------------- |
+| `ms<char>`（选中文本后）          | 为选区添加环绕字符                     |
+| `mr<char_to_replace><new_char>`   | 替换最近的环绕字符                     |
+| `md<char_to_delete>`              | 删除最近的环绕字符                     |
 
-You can use counts to act on outer pairs.
+你可以使用计数来作用于外层配对。
 
-Surround can also act on multiple selections. For example, to change every occurrence of `(use)` to `[use]`:
+环绕也可以作用于多个选区。例如，要将所有出现的 `(use)` 改为 `[use]`：
 
-1. `%` to select the whole file
-2. `s` to split the selections on a search term
-3. Input `use` and hit Enter
-4. `mr([` to replace the parentheses with square brackets
+1. `%` 选中整个文件
+2. `s` 按搜索词拆分选区
+3. 输入 `use` 并按下 Enter
+4. `mr([` 将圆括号替换为方括号
 
-Multiple characters are currently not supported, but planned for future release.
-
+目前不支持多个字符，但计划在未来的版本中支持。

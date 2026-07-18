@@ -1,4 +1,4 @@
-## 包管理器
+## 从包管理器安装
 
 - [Linux](#linux)
   - [Debian](#debian)
